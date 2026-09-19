@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "BookedAway Ad Studio",
-  description: "Create Facebook & Instagram ad creatives from your product photos and publish them straight to Ads Manager."
+  description: "Create Facebook & Instagram ad creatives from your product photos, then hand them to Claude to publish via Meta's official Ads MCP."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

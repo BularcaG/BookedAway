@@ -1,7 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
 import crypto from "crypto";
-import type { FacebookConnection } from "./facebook/types";
 
 export interface AssetRecord {
   id: string;
@@ -24,28 +23,15 @@ export interface CreativeRecord {
   createdAt: number;
 }
 
-export interface CampaignRecord {
-  id: string; // Facebook campaign id
-  name: string;
-  adSetId: string;
-  adIds: string[];
-  creativeIds: string[];
-  status: string;
-  manageUrl: string;
-  createdAt: number;
-}
-
 interface DbShape {
-  facebookConnection: FacebookConnection | null;
   assets: AssetRecord[];
   creatives: CreativeRecord[];
-  campaigns: CampaignRecord[];
 }
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const DB_FILE = path.join(DATA_DIR, "db.json");
 
-const EMPTY_DB: DbShape = { facebookConnection: null, assets: [], creatives: [], campaigns: [] };
+const EMPTY_DB: DbShape = { assets: [], creatives: [] };
 
 // Single-process in-memory lock so two concurrent requests can't clobber a
 // read-modify-write cycle against the JSON file. This app is designed for a
@@ -92,23 +78,6 @@ export function newId(prefix: string): string {
   return `${prefix}_${crypto.randomBytes(8).toString("hex")}`;
 }
 
-export async function getConnection(): Promise<FacebookConnection | null> {
-  const db = await readDb();
-  return db.facebookConnection;
-}
-
-export async function saveConnection(conn: FacebookConnection): Promise<void> {
-  await mutate((db) => {
-    db.facebookConnection = conn;
-  });
-}
-
-export async function clearConnection(): Promise<void> {
-  await mutate((db) => {
-    db.facebookConnection = null;
-  });
-}
-
 export async function addAsset(asset: AssetRecord): Promise<AssetRecord> {
   await mutate((db) => {
     db.assets.unshift(asset);
@@ -142,16 +111,4 @@ export async function getCreatives(ids: string[]): Promise<CreativeRecord[]> {
   const db = await readDb();
   const set = new Set(ids);
   return db.creatives.filter((c) => set.has(c.id));
-}
-
-export async function addCampaign(campaign: CampaignRecord): Promise<CampaignRecord> {
-  await mutate((db) => {
-    db.campaigns.unshift(campaign);
-  });
-  return campaign;
-}
-
-export async function listCampaigns(): Promise<CampaignRecord[]> {
-  const db = await readDb();
-  return db.campaigns;
 }

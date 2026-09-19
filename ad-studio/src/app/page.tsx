@@ -2,15 +2,13 @@
 
 import { useState } from "react";
 import StepNav from "@/components/StepNav";
-import ConnectFacebook from "@/components/ConnectFacebook";
 import UploadAssets from "@/components/UploadAssets";
 import GenerateCreatives from "@/components/GenerateCreatives";
-import PublishCampaign from "@/components/PublishCampaign";
+import HandoffPanel from "@/components/HandoffPanel";
 import type { CreativeRecord } from "@/lib/store";
 
 export default function Home() {
   const [step, setStep] = useState(1);
-  const [fbReady, setFbReady] = useState(false);
   const [assetId, setAssetId] = useState<string | null>(null);
   const [creatives, setCreatives] = useState<CreativeRecord[]>([]);
   const [selectedCreativeIds, setSelectedCreativeIds] = useState<string[]>([]);
@@ -25,44 +23,39 @@ export default function Home() {
     <main>
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-slate-900">BookedAway Ad Studio</h1>
-        <p className="mt-1 text-slate-600">Upload a product photo, generate ad creatives, publish straight to Facebook Ads Manager.</p>
+        <p className="mt-1 text-slate-600">
+          Upload a product photo, generate ad creatives, then hand them to Claude to publish via Meta&apos;s official
+          Ads MCP - this app never talks to Facebook itself.
+        </p>
       </header>
 
       <StepNav current={step} />
 
       <div className="space-y-6">
-        {step === 1 && <ConnectFacebook onReady={setFbReady} />}
+        {step === 1 && <UploadAssets selectedAssetId={assetId} onSelect={setAssetId} />}
 
-        {step === 2 && <UploadAssets selectedAssetId={assetId} onSelect={setAssetId} />}
-
-        {step === 3 && assetId && (
-          <GenerateCreatives
-            assetId={assetId}
-            selectedCreativeIds={selectedCreativeIds}
-            onToggleCreative={toggleCreative}
-            creatives={creatives}
-            setCreatives={setCreatives}
-          />
+        {step === 2 && assetId && (
+          <>
+            <GenerateCreatives
+              assetId={assetId}
+              selectedCreativeIds={selectedCreativeIds}
+              onToggleCreative={toggleCreative}
+              creatives={creatives}
+              setCreatives={setCreatives}
+            />
+            <HandoffPanel selected={selectedCreatives} />
+          </>
         )}
-
-        {step === 4 && <PublishCampaign selectedCreatives={selectedCreatives} />}
 
         <div className="flex justify-between">
           <button className="btn-secondary" disabled={step === 1} onClick={() => setStep((s) => Math.max(1, s - 1))}>
             Back
           </button>
-          <button
-            className="btn-primary"
-            disabled={
-              (step === 1 && !fbReady) ||
-              (step === 2 && !assetId) ||
-              (step === 3 && !selectedCreativeIds.length) ||
-              step === 4
-            }
-            onClick={() => setStep((s) => Math.min(4, s + 1))}
-          >
-            Continue
-          </button>
+          {step === 1 && (
+            <button className="btn-primary" disabled={!assetId} onClick={() => setStep(2)}>
+              Continue
+            </button>
+          )}
         </div>
       </div>
     </main>

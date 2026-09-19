@@ -1,10 +1,8 @@
 "use client";
 
 const STEPS = [
-  { id: 1, label: "Connect Facebook" },
-  { id: 2, label: "Upload Photo" },
-  { id: 3, label: "Generate Creatives" },
-  { id: 4, label: "Publish Campaign" }
+  { id: 1, label: "Upload Photo" },
+  { id: 2, label: "Generate & Hand Off" }
 ];
 
 export default function StepNav({ current }: { current: number }) {
