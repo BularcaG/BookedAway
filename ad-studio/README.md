@@ -20,7 +20,10 @@ If you just want plain-language, step-by-step instructions, read
    the app crops your photo into every Facebook ad size (1:1 feed, 4:5 feed,
    9:16 story/reel) and burns in one of three overlay templates for each,
    producing a batch of variations in one click (via `sharp` + SVG
-   compositing - no external AI API or budget needed).
+   compositing - no external AI API or budget needed). A fourth
+   "No Overlay (Resize Only)" template is available for creatives you've
+   already finished elsewhere - it only crops/resizes, no text is added,
+   and no headline is required when it's the only one selected.
 3. **Hand off** - pick the winners, download the images (or copy the
    auto-generated brief), and paste them to Claude in chat. Claude creates
    the real Campaign/Ad Set/Ads through the official Meta MCP, paused by
@@ -53,7 +56,7 @@ src/
       creatives/                generate/list ad creative variations
   lib/
     creative-studio/
-      templates.ts                3 SVG overlay templates + word-wrapping
+      templates.ts                3 SVG overlay templates + a no-overlay passthrough + word-wrapping
       compose.ts                   sharp: crop photo to each ad size + composite overlay
     store.ts                     tiny JSON-file database (data/db.json) - assets + creatives only
 ```

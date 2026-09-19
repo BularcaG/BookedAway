@@ -30,7 +30,11 @@ export async function generateVariations(inputBuffer: Buffer, opts: GenerateOpti
   const templates = opts.templateIds?.length ? TEMPLATES.filter((t) => opts.templateIds!.includes(t.id)) : TEMPLATES;
   const brandColor = opts.brandColor && HEX_COLOR.test(opts.brandColor) ? opts.brandColor : "#2a55d8";
 
-  if (!opts.headline?.trim()) throw new Error("A headline is required to generate creatives");
+  // "passthrough" just crops/resizes - it has no text to burn in, so it's the
+  // one template that doesn't need a headline. Only require one when at
+  // least one overlay template was actually requested.
+  const needsHeadline = templates.some((t) => t.id !== "passthrough");
+  if (needsHeadline && !opts.headline?.trim()) throw new Error("A headline is required for the selected templates");
   if (!formats.length) throw new Error("At least one format must be selected");
   if (!templates.length) throw new Error("At least one template must be selected");
 
@@ -45,19 +49,26 @@ export async function generateVariations(inputBuffer: Buffer, opts: GenerateOpti
       .toBuffer();
 
     for (const template of templates) {
-      const svg = template.render({
-        width,
-        height,
-        headline: opts.headline,
-        subheadline: opts.subheadline ?? "",
-        cta: opts.cta?.trim() || "Shop Now",
-        brandColor
-      });
+      let composed: Buffer;
 
-      const composed = await sharp(baseImage)
-        .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
-        .jpeg({ quality: 92 })
-        .toBuffer();
+      if (template.id === "passthrough") {
+        // No overlay to burn in - just re-encode the crop as-is.
+        composed = await sharp(baseImage).jpeg({ quality: 92 }).toBuffer();
+      } else {
+        const svg = template.render({
+          width,
+          height,
+          headline: opts.headline,
+          subheadline: opts.subheadline ?? "",
+          cta: opts.cta?.trim() || "Shop Now",
+          brandColor
+        });
+
+        composed = await sharp(baseImage)
+          .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
+          .jpeg({ quality: 92 })
+          .toBuffer();
+      }
 
       variations.push({ templateId: template.id, format, width, height, buffer: composed });
     }

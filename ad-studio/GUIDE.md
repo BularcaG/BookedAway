@@ -45,6 +45,22 @@ gallery to select it, then hit **Continue**.
 Don't like any of them? Change the headline/color and generate again - old
 ones stay, new ones get added.
 
+### Already have a finished ad image? Skip the text overlay
+
+If you (or a designer) already made a complete ad creative somewhere else -
+with the text, branding and everything already on it - you don't want this
+app adding *more* text on top of that. In that case:
+
+1. Upload that finished image in Step 1 like normal.
+2. In Step 2, **uncheck every template except "No Overlay (Resize Only)"**.
+3. You can leave the headline field blank - it's not used for this template.
+4. Click **Generate**. This just crops/resizes your finished creative into
+   Facebook's ad sizes, without stamping anything extra on it.
+
+You can even check "No Overlay" *together with* the other templates in the
+same click if you want both a plain resized version and text-overlay
+versions to compare.
+
 ## Part 3 - Hand it to Claude to actually publish
 
 As soon as you select at least one creative, a box appears: **"Hand off to

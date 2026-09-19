@@ -1,5 +1,5 @@
 export type FormatId = "square" | "portrait" | "story";
-export type TemplateId = "bold-bottom-bar" | "top-banner-clean" | "framed-badge";
+export type TemplateId = "bold-bottom-bar" | "top-banner-clean" | "framed-badge" | "passthrough";
 
 export const FORMAT_DIMENSIONS: Record<FormatId, { width: number; height: number; label: string; fbPlacement: string }> = {
   square: { width: 1080, height: 1080, label: "1:1 Feed", fbPlacement: "Facebook & Instagram Feed" },
@@ -145,7 +145,18 @@ const framedBadge: Template = {
   }
 };
 
-export const TEMPLATES: Template[] = [boldBottomBar, topBannerClean, framedBadge];
+const passthrough: Template = {
+  id: "passthrough",
+  label: "No Overlay (Resize Only)",
+  description: "Crops/resizes the image to the target size only - no text or branding added. Use this for a creative you already finished elsewhere.",
+  render() {
+    // No visual content - compose.ts skips compositing entirely for this
+    // template, but a render() is kept so it behaves like any other Template.
+    return "";
+  }
+};
+
+export const TEMPLATES: Template[] = [boldBottomBar, topBannerClean, framedBadge, passthrough];
 
 export function getTemplate(id: TemplateId): Template {
   const t = TEMPLATES.find((tpl) => tpl.id === id);

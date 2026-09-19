@@ -6,8 +6,11 @@ import type { CreativeRecord } from "@/lib/store";
 const TEMPLATE_OPTIONS = [
   { id: "bold-bottom-bar", label: "Bold Bottom Bar" },
   { id: "top-banner-clean", label: "Top Banner Clean" },
-  { id: "framed-badge", label: "Framed Badge" }
+  { id: "framed-badge", label: "Framed Badge" },
+  { id: "passthrough", label: "No Overlay (Resize Only)" }
 ];
+
+const OVERLAY_TEMPLATE_IDS = TEMPLATE_OPTIONS.filter((t) => t.id !== "passthrough").map((t) => t.id);
 
 const FORMAT_OPTIONS = [
   { id: "square", label: "Square (Feed 1:1)" },
@@ -32,7 +35,7 @@ export default function GenerateCreatives({
   const [subheadline, setSubheadline] = useState("");
   const [cta, setCta] = useState("Shop Now");
   const [brandColor, setBrandColor] = useState("#2a55d8");
-  const [templates, setTemplates] = useState<string[]>(TEMPLATE_OPTIONS.map((t) => t.id));
+  const [templates, setTemplates] = useState<string[]>(OVERLAY_TEMPLATE_IDS);
   const [formats, setFormats] = useState<string[]>(["square", "portrait"]);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,8 +45,9 @@ export default function GenerateCreatives({
   }
 
   async function generate() {
-    if (!headline.trim()) {
-      setError("Give your ad a headline first");
+    const needsHeadline = templates.some((t) => t !== "passthrough");
+    if (needsHeadline && !headline.trim()) {
+      setError("Give your ad a headline first (or uncheck every template except \"No Overlay\")");
       return;
     }
     if (!templates.length || !formats.length) {
@@ -75,7 +79,9 @@ export default function GenerateCreatives({
       <h2 className="text-lg font-semibold">Step 3 · Generate ad creatives</h2>
       <p className="text-sm text-slate-600">
         Write your ad copy once. We&apos;ll stamp it onto your photo in every template and size you pick below -
-        that&apos;s your batch of variations to test, exactly like a creative studio would hand you.
+        that&apos;s your batch of variations to test, exactly like a creative studio would hand you. Already have a
+        finished creative (made elsewhere) and just want it resized to Facebook&apos;s ad sizes with no extra text?
+        Uncheck everything except <strong>&quot;No Overlay (Resize Only)&quot;</strong> below.
       </p>
 
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
