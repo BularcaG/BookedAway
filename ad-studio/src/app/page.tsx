@@ -24,6 +24,8 @@ export default function LibraryPage() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importJson, setImportJson] = useState("");
 
   async function refresh() {
     const [specRes, assetRes] = await Promise.all([fetch("/api/specs"), fetch("/api/assets/list")]);
@@ -55,6 +57,25 @@ export default function LibraryPage() {
     }
   }
 
+  async function importSpec() {
+    setBusy(true);
+    setError(null);
+    try {
+      const parsed = JSON.parse(importJson);
+      const res = await fetch("/api/specs/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(parsed)
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Import failed");
+      router.push(`/builder?id=${data.spec.id}`);
+    } catch (err) {
+      setError(err instanceof Error ? `Import failed: ${err.message}` : "Import failed");
+      setBusy(false);
+    }
+  }
+
   async function removeSpec(id: string) {
     if (!confirm("Delete this ad spec? This can't be undone.")) return;
     await fetch(`/api/specs/${id}`, { method: "DELETE" });
@@ -73,10 +94,41 @@ export default function LibraryPage() {
             through Meta&apos;s official connection. Duplicating an ad that already works is usually the fastest route.
           </p>
         </div>
-        <button className="btn-primary" onClick={() => createSpec()} disabled={busy}>
-          + New ad
-        </button>
+        <div className="flex gap-2">
+          <button className="btn-secondary" onClick={() => setImportOpen((v) => !v)}>
+            Import spec
+          </button>
+          <button className="btn-primary" onClick={() => createSpec()} disabled={busy}>
+            + New ad
+          </button>
+        </div>
       </div>
+
+      {importOpen && (
+        <div className="card card-body">
+          <div>
+            <label className="label">Paste a spec JSON</label>
+            <textarea
+              className="textarea h-40 font-mono text-[11px]"
+              value={importJson}
+              onChange={(e) => setImportJson(e.target.value)}
+              placeholder='Paste the contents of seeds/testing-campaign-baseline.json, or any spec JSON Claude gives you.'
+            />
+            <p className="hint">
+              Anything the JSON leaves out falls back to defaults, so a partial spec is fine. Useful for seeding settings
+              read off a campaign that already runs in Ads Manager.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <button className="btn-primary" onClick={importSpec} disabled={busy || !importJson.trim()}>
+              Import
+            </button>
+            <button className="btn-secondary" onClick={() => setImportOpen(false)}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
