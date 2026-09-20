@@ -46,9 +46,13 @@ export default function UploadAssets({
 
   return (
     <div className="card space-y-4">
-      <h2 className="text-lg font-semibold">Step 2 · Upload a product photo</h2>
+      <h2 className="text-lg font-semibold">Step 2 · Upload a product photo or design</h2>
       <p className="text-sm text-slate-600">
-        One clean photo of your product is enough - we&apos;ll crop and reformat it into every ad size you need.
+        A clean photo of your product gets cropped and reformatted into every ad size you need. A transparent
+        design file (PNG/WebP with a transparent background - a print-ready graphic, not a photo) is detected
+        automatically and instead gets centered on a solid canvas in whatever brand color you pick in Step 3 - the
+        checkered thumbnails below are your transparent uploads, shown against a checkerboard so you can see what&apos;s
+        actually transparent.
       </p>
 
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
@@ -78,9 +82,15 @@ export default function UploadAssets({
                   "overflow-hidden rounded-lg border-2 " +
                   (selectedAssetId === asset.id ? "border-brand-600" : "border-transparent")
                 }
+                style={{
+                  backgroundImage:
+                    "linear-gradient(45deg, #e5e7eb 25%, transparent 25%), linear-gradient(-45deg, #e5e7eb 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e7eb 75%), linear-gradient(-45deg, transparent 75%, #e5e7eb 75%)",
+                  backgroundSize: "16px 16px",
+                  backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0px"
+                }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={asset.url} alt="" className="aspect-square w-full object-cover" />
+                <img src={asset.url} alt="" className="aspect-square w-full object-contain" />
               </button>
             ))}
           </div>

@@ -105,7 +105,7 @@ export default function GenerateCreatives({
           />
         </div>
         <div>
-          <label className="label">Brand color</label>
+          <label className="label">Brand color (also the garment color for transparent designs)</label>
           <input type="color" className="h-10 w-20 rounded border border-slate-300" value={brandColor} onChange={(e) => setBrandColor(e.target.value)} />
         </div>
       </div>
