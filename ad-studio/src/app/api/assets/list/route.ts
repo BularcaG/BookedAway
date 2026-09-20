@@ -6,8 +6,7 @@ export const runtime = "nodejs";
 
 export async function GET() {
   try {
-    const assets = await listAssets();
-    return NextResponse.json({ assets });
+    return NextResponse.json({ assets: await listAssets() });
   } catch (error) {
     return handleApiError(error);
   }

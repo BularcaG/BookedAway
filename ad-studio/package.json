@@ -2,7 +2,7 @@
   "name": "ad-studio",
   "version": "0.1.0",
   "private": true,
-  "description": "BookedAway Ad Studio - generate Facebook & Instagram ad creatives from product photos. Publishing to Ads Manager happens via Claude + Meta's official Ads MCP.",
+  "description": "BookedAway Ad Console - build Facebook ad specs (campaign, budgets, bid caps, creative) and hand them off for publishing via Meta's official Ads MCP.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

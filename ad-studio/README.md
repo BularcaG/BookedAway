@@ -1,102 +1,94 @@
-# BookedAway Ad Studio
+# BookedAway Ad Console
 
-A small self-hosted app that does the "creative studio" half of what tools
-like RapidAds do: turn a product photo into a batch of ready-to-run
-Facebook/Instagram ad creatives.
+A self-hosted workspace for building Facebook ad specs - campaign, ad set,
+creative, budgets, bid caps, targeting - and handing them off to be published
+through **Meta's official Ads MCP**.
 
-**This app never talks to Facebook.** Publishing (creating the actual
-Campaign → Ad Set → Ads in Ads Manager) happens by handing the generated
-images to Claude, which is connected to **Meta's official Ads MCP server**
-(`mcp.facebook.com/ads`). That split is deliberate - see "Why no built-in
-Facebook publishing?" below.
+**This app never talks to Facebook.** It has no Facebook credentials and makes
+no Marketing API calls. It produces a complete, unambiguous brief; Claude then
+creates the campaign/ad set/ads through Meta's own sanctioned connection. That
+split is deliberate: you get a fast, purpose-built front-end without running a
+second unofficial integration against your ad account.
 
-If you just want plain-language, step-by-step instructions, read
-**[GUIDE.md](./GUIDE.md)** instead - this file is the technical reference.
+For click-by-click instructions see **[GUIDE.md](./GUIDE.md)**.
 
 ## What it does
 
-1. **Upload a product photo** - one JPEG/PNG/WebP image.
-2. **Generate creatives** - pick a headline, subheadline, CTA and brand color;
-   the app crops your photo into every Facebook ad size (1:1 feed, 4:5 feed,
-   9:16 story/reel) and burns in one of three overlay templates for each,
-   producing a batch of variations in one click (via `sharp` + SVG
-   compositing - no external AI API or budget needed). A fourth
-   "No Overlay (Resize Only)" template is available for creatives you've
-   already finished elsewhere - it only crops/resizes, no text is added,
-   and no headline is required when it's the only one selected.
-3. **Hand off** - pick the winners, download the images (or copy the
-   auto-generated brief), and paste them to Claude in chat. Claude creates
-   the real Campaign/Ad Set/Ads through the official Meta MCP, paused by
-   default so nothing spends until you review it.
+- **Ad Library** - every spec you've built, with status (Draft / Sent), budget,
+  CBO-vs-ABO, bid strategy and format at a glance.
+- **Duplicate** - clone any previous spec in one click and change only what's
+  different. Most new ads are a proven ad with new creative or new copy, so this
+  is the primary path, not an afterthought.
+- **Builder** - one page covering everything:
+  - *Campaign*: reuse an existing campaign or create a new one; objective;
+    catalog campaign toggle; special ad category toggle; **campaign budget (CBO)
+    vs ad set budget (ABO)**.
+  - *Ad set*: budget (daily/lifetime), **bid strategy - highest volume, cost cap
+    or bid cap, with the target/cap amount**; optimization goal (only the ones
+    Meta accepts for the chosen objective); billing event; pixel + conversion
+    event; countries; age range; Advantage+ Audience; manual placements.
+  - *Ad & creative*: **single image / carousel / collection**; shop-surface
+    toggle; primary text, headline, description; CTA; destination URL; page and
+    Instagram account; creative file upload; Advantage+ creative enhancements
+    (off by default); AI content disclosure.
+- **Hand off** - builds the brief, validates it, and gives you a copyable brief
+  plus a JSON payload whose field names match the Meta MCP tool parameters
+  exactly, so submitting is transcription rather than interpretation.
 
-## Why no built-in Facebook publishing?
+### Defaults are opinionated
 
-An earlier version of this app called the Meta Marketing API directly with
-its own Facebook App + OAuth flow. That works, but it means yet another
-piece of software holding a live `ads_management` token and making raw API
-calls - exactly the kind of unfamiliar-integration traffic that can trip
-Meta's automated enforcement. Routing every write (campaign/ad set/ad/image
-upload) through **Meta's own hosted MCP server** instead means:
+Enhancements and customizations are **off** unless you turn them on. The toggles
+that are exposed are the ones that actually matter for this store; everything
+else Meta offers is intentionally not surfaced. Sensible values (ad account,
+page, pixid, $20/day, US 18-65, Advantage+ Audience on) are pre-filled from the
+account's existing live ad sets so a new spec starts from what already works.
 
-- No custom app credentials, no OAuth flow to maintain, no token stored on
-  disk here.
-- Every publish action is Meta's own sanctioned client, not a third-party
-  wrapper or proxy.
-- The creative-generation half (the part Meta has no equivalent for) stays
-  local, free, and fast.
+### Validation before anything reaches Facebook
+
+The hand-off panel blocks on real problems rather than letting them through:
+cost cap selected with no amount, carousel with fewer than two images,
+conversion optimization with no pixel, missing destination URL, and so on.
 
 ## Architecture
 
 ```
 src/
   app/
-    page.tsx                    2-step wizard UI (client component)
+    page.tsx                 Ad Library - list, duplicate, delete
+    builder/page.tsx         Builder route
     api/
-      assets/                   upload/list product photos
-      creatives/                generate/list ad creative variations
+      specs/                 CRUD + duplicate (POST with duplicateFromId)
+      specs/[id]/brief/      GET builds brief+payload+validation, POST marks sent
+      assets/                creative upload/list (stored as-is, no processing)
+  components/
+    Toggle.tsx               pill switch
+    builder/                 Campaign / AdSet / Creative sections, Segmented, BriefPanel
   lib/
-    creative-studio/
-      templates.ts                3 SVG overlay templates + a no-overlay passthrough + word-wrapping
-      compose.ts                   sharp: crop photo to each ad size + composite overlay
-    store.ts                     tiny JSON-file database (data/db.json) - assets + creatives only
+    types.ts                 AdSpec shape
+    defaults.ts              objectives, goals, bid strategies, account defaults
+    brief.ts                 spec -> brief text + MCP-shaped payload + validation
+    store.ts                 JSON-file store (data/db.json)
 ```
 
-Uploaded photos live in `public/uploads/`, generated creatives in
-`public/generated/`, and records of what was generated live in
-`data/db.json`. All three are gitignored.
+No database server, no external APIs, no credentials. Specs live in
+`data/db.json`, uploaded creatives in `public/uploads/` - both gitignored.
 
 ## Setup
 
 ```bash
 cd ad-studio
 npm install
-npm run dev                  # http://localhost:3000
+npm run dev     # http://localhost:3000
 ```
 
-No environment variables or Facebook App are required to run this app - it
-only ever writes local files.
-
-## Publishing (outside this app)
-
-1. Connect Meta's official Ads MCP (`https://mcp.facebook.com/ads`) as a
-   custom connector in Claude, and authorize it against the ad account/Page
-   you actually manage - this needs `ads_management` on your own account,
-   which is Standard Access and needs no App Review.
-2. In this app, generate and select your creatives (Step 2's "Hand off to
-   Claude" panel gives you a ready-made brief).
-3. Attach the downloaded image(s) to your chat with Claude (or, if this app
-   is deployed somewhere public, give Claude the image URLs) along with the
-   campaign name/budget/targeting/destination URL.
-4. Claude creates the Campaign → Ad Set → Ad(s) via the MCP, paused by
-   default.
+No environment variables required.
 
 ## Production notes
 
-- Local disk storage for images should move to S3/Cloud Storage (or the app
-  should be deployed somewhere public) if you want Claude to fetch creative
-  images by URL instead of by file attachment.
-- No multi-user auth - this is a single-operator internal tool.
-- Ad creative generation is template-based (deterministic, fast, free). If
-  you want AI-generated backgrounds/upscaling, that's a separate pluggable
-  step you'd add in `lib/creative-studio/` - the rest of the pipeline does
-  not need to change.
+- Single-operator tool. No auth - don't expose it beyond your own machine
+  without adding some.
+- Local disk storage for creatives; move to S3 if this is ever deployed.
+- The spec library is local, so "duplicate" covers ads built *in this tool*. To
+  seed it from campaigns that already exist in Ads Manager, ask Claude to read
+  the live settings via MCP and fill in a spec once - after that it's duplicable
+  like any other.

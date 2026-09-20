@@ -1,41 +1,21 @@
 import { promises as fs } from "fs";
 import path from "path";
 import crypto from "crypto";
-
-export interface AssetRecord {
-  id: string;
-  fileName: string;
-  url: string; // served from /uploads/<file>
-  width: number;
-  height: number;
-  createdAt: number;
-}
-
-export interface CreativeRecord {
-  id: string;
-  assetId: string;
-  templateId: string;
-  format: "square" | "portrait" | "story";
-  url: string; // served from /generated/<file>
-  headline: string;
-  subheadline: string;
-  cta: string;
-  createdAt: number;
-}
+import type { AdSpec, CreativeAsset } from "./types";
 
 interface DbShape {
-  assets: AssetRecord[];
-  creatives: CreativeRecord[];
+  assets: CreativeAsset[];
+  specs: AdSpec[];
 }
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const DB_FILE = path.join(DATA_DIR, "db.json");
 
-const EMPTY_DB: DbShape = { assets: [], creatives: [] };
+const EMPTY_DB: DbShape = { assets: [], specs: [] };
 
 // Single-process in-memory lock so two concurrent requests can't clobber a
 // read-modify-write cycle against the JSON file. This app is designed for a
-// single small team running one server process, not a distributed deployment.
+// single operator running one server process, not a distributed deployment.
 let writeQueue: Promise<unknown> = Promise.resolve();
 
 async function ensureDb(): Promise<void> {
@@ -57,19 +37,15 @@ async function readDb(): Promise<DbShape> {
   }
 }
 
-async function writeDb(db: DbShape): Promise<void> {
-  await fs.writeFile(DB_FILE, JSON.stringify(db, null, 2));
-}
-
 function mutate<T>(fn: (db: DbShape) => T | Promise<T>): Promise<T> {
   const task = writeQueue.then(async () => {
     const db = await readDb();
     const result = await fn(db);
-    await writeDb(db);
+    await fs.writeFile(DB_FILE, JSON.stringify(db, null, 2));
     return result;
   });
-  // Swallow errors in the chain itself so one failed mutation doesn't wedge the queue,
-  // while still letting the caller's own promise reject with the real error.
+  // Swallow errors in the chain itself so one failed mutation doesn't wedge the
+  // queue, while still letting the caller's own promise reject with the real error.
   writeQueue = task.catch(() => undefined);
   return task;
 }
@@ -78,37 +54,49 @@ export function newId(prefix: string): string {
   return `${prefix}_${crypto.randomBytes(8).toString("hex")}`;
 }
 
-export async function addAsset(asset: AssetRecord): Promise<AssetRecord> {
+export async function addAsset(asset: CreativeAsset): Promise<CreativeAsset> {
   await mutate((db) => {
     db.assets.unshift(asset);
   });
   return asset;
 }
 
-export async function listAssets(): Promise<AssetRecord[]> {
+export async function listAssets(): Promise<CreativeAsset[]> {
   const db = await readDb();
   return db.assets;
 }
 
-export async function getAsset(id: string): Promise<AssetRecord | undefined> {
+export async function getAssets(ids: string[]): Promise<CreativeAsset[]> {
   const db = await readDb();
-  return db.assets.find((a) => a.id === id);
+  // Preserve the caller's order - carousel card order is meaningful.
+  return ids.map((id) => db.assets.find((a) => a.id === id)).filter((a): a is CreativeAsset => Boolean(a));
 }
 
-export async function addCreatives(creatives: CreativeRecord[]): Promise<CreativeRecord[]> {
-  await mutate((db) => {
-    db.creatives.unshift(...creatives);
+export async function listSpecs(): Promise<AdSpec[]> {
+  const db = await readDb();
+  return [...db.specs].sort((a, b) => b.updatedAt - a.updatedAt);
+}
+
+export async function getSpec(id: string): Promise<AdSpec | undefined> {
+  const db = await readDb();
+  return db.specs.find((s) => s.id === id);
+}
+
+export async function saveSpec(spec: AdSpec): Promise<AdSpec> {
+  return mutate((db) => {
+    const index = db.specs.findIndex((s) => s.id === spec.id);
+    const next = { ...spec, updatedAt: Date.now() };
+    if (index === -1) db.specs.unshift(next);
+    else db.specs[index] = next;
+    return next;
   });
-  return creatives;
 }
 
-export async function listCreatives(): Promise<CreativeRecord[]> {
-  const db = await readDb();
-  return db.creatives;
-}
-
-export async function getCreatives(ids: string[]): Promise<CreativeRecord[]> {
-  const db = await readDb();
-  const set = new Set(ids);
-  return db.creatives.filter((c) => set.has(c.id));
+export async function deleteSpec(id: string): Promise<boolean> {
+  return mutate((db) => {
+    const index = db.specs.findIndex((s) => s.id === id);
+    if (index === -1) return false;
+    db.specs.splice(index, 1);
+    return true;
+  });
 }
