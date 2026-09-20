@@ -1,5 +1,5 @@
 export type FormatId = "square" | "portrait" | "story";
-export type TemplateId = "bold-bottom-bar" | "top-banner-clean" | "framed-badge" | "passthrough";
+export type TemplateId = "bold-bottom-bar" | "top-banner-clean" | "framed-badge" | "deal-card" | "passthrough";
 
 export const FORMAT_DIMENSIONS: Record<FormatId, { width: number; height: number; label: string; fbPlacement: string }> = {
   square: { width: 1080, height: 1080, label: "1:1 Feed", fbPlacement: "Facebook & Instagram Feed" },
@@ -145,6 +145,39 @@ const framedBadge: Template = {
   }
 };
 
+const dealCard: Template = {
+  id: "deal-card",
+  label: "Deal Card (stars + CTA)",
+  description:
+    "Image on top, a bottom card with a bold headline and a star-rating social-proof line, then a Shop Now pill - modeled on the long-running ad structure used by durable, repeatedly-relaunched DTC apparel ads (image → headline → star rating + social proof → CTA).",
+  render({ width, height, headline, subheadline, cta, brandColor }) {
+    const cardHeight = Math.round(height * 0.24);
+    const cardY = height - cardHeight;
+    const headlineFontSize = Math.round(width * 0.05);
+    const proofFontSize = Math.round(width * 0.032);
+    const headlineLines = wrapText(headline, 28, 2);
+    const ctaWidth = Math.round(width * 0.46);
+    const ctaHeight = Math.round(height * 0.05);
+    const ctaX = Math.round((width - ctaWidth) / 2);
+    const ctaY = height - Math.round(height * 0.055);
+
+    const headlineStartY = cardY + Math.round(cardHeight * 0.34);
+    const proofY = headlineStartY + headlineFontSize * (headlineLines.length - 1) * 1.08 + proofFontSize * 1.9;
+    const centerX = Math.round(width / 2);
+
+    const socialProof = subheadline.trim() ? `★★★★★  ${subheadline.trim()}` : "★★★★★  Loved by our customers";
+
+    return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="${cardY}" width="${width}" height="${cardHeight}" fill="#FBF8F3"/>
+      <rect x="0" y="${cardY}" width="${width}" height="5" fill="${brandColor}"/>
+      <text x="${centerX}" y="${headlineStartY}" font-family="Georgia, 'Times New Roman', serif" font-size="${headlineFontSize}" font-weight="700" fill="#2A2118" text-anchor="middle">${centeredTspans(headlineLines, centerX, headlineStartY, headlineFontSize * 1.08)}</text>
+      <text x="${centerX}" y="${proofY}" font-family="Arial, Helvetica, sans-serif" font-size="${proofFontSize}" fill="#8A6D1F" text-anchor="middle">${escapeXml(socialProof)}</text>
+      <rect x="${ctaX}" y="${ctaY}" width="${ctaWidth}" height="${ctaHeight}" rx="${ctaHeight / 2}" fill="${brandColor}"/>
+      <text x="${centerX}" y="${ctaY + ctaHeight / 2 + proofFontSize * 0.36}" font-family="Arial, Helvetica, sans-serif" font-size="${Math.round(proofFontSize * 0.98)}" font-weight="700" fill="#ffffff" text-anchor="middle">${escapeXml(cta.toUpperCase())}</text>
+    </svg>`;
+  }
+};
+
 const passthrough: Template = {
   id: "passthrough",
   label: "No Overlay (Resize Only)",
@@ -156,7 +189,7 @@ const passthrough: Template = {
   }
 };
 
-export const TEMPLATES: Template[] = [boldBottomBar, topBannerClean, framedBadge, passthrough];
+export const TEMPLATES: Template[] = [boldBottomBar, topBannerClean, framedBadge, dealCard, passthrough];
 
 export function getTemplate(id: TemplateId): Template {
   const t = TEMPLATES.find((tpl) => tpl.id === id);

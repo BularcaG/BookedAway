@@ -7,6 +7,7 @@ const TEMPLATE_OPTIONS = [
   { id: "bold-bottom-bar", label: "Bold Bottom Bar" },
   { id: "top-banner-clean", label: "Top Banner Clean" },
   { id: "framed-badge", label: "Framed Badge" },
+  { id: "deal-card", label: "Deal Card (stars + CTA)" },
   { id: "passthrough", label: "No Overlay (Resize Only)" }
 ];
 
@@ -96,8 +97,13 @@ export default function GenerateCreatives({
           <input className="input" value={cta} onChange={(e) => setCta(e.target.value)} placeholder="Shop Now" />
         </div>
         <div className="sm:col-span-2">
-          <label className="label">Subheadline (optional)</label>
-          <input className="input" value={subheadline} onChange={(e) => setSubheadline(e.target.value)} placeholder="Free shipping this week only" />
+          <label className="label">Subheadline / social proof (optional)</label>
+          <input
+            className="input"
+            value={subheadline}
+            onChange={(e) => setSubheadline(e.target.value)}
+            placeholder="Free shipping this week only - or, for Deal Card: 10,000+ Happy Readers"
+          />
         </div>
         <div>
           <label className="label">Brand color</label>
