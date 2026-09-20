@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import { FORMAT_DIMENSIONS, TEMPLATES, type FormatId, type TemplateId } from "./templates";
+import { FORMAT_DIMENSIONS, TEMPLATES, escapeXml, wrapText, type FormatId, type TemplateId } from "./templates";
 
 export interface GenerateOptions {
   headline: string;
@@ -80,4 +80,41 @@ export async function generateVariations(inputBuffer: Buffer, opts: GenerateOpti
 export async function readImageDimensions(buffer: Buffer): Promise<{ width: number; height: number }> {
   const meta = await sharp(buffer).metadata();
   return { width: meta.width ?? 0, height: meta.height ?? 0 };
+}
+
+export type TextPosition = "top" | "center" | "bottom";
+
+/**
+ * Stamps the exact text supplied - nothing auto-added, nothing reworded -
+ * onto an already-generated image. Used for the "generate with no text,
+ * then decide whether to add exact text later" flow: unlike the templates
+ * above, this never invents a headline/CTA/subheadline of its own.
+ */
+export async function addTextOverlay(inputBuffer: Buffer, text: string, position: TextPosition = "bottom"): Promise<Buffer> {
+  if (!text.trim()) throw new Error("Text is required");
+
+  const { width, height } = await readImageDimensions(inputBuffer);
+  if (!width || !height) throw new Error("Could not read this image");
+
+  const fontSize = Math.round(width * 0.058);
+  const lines = wrapText(text, 24, 4);
+  const lineHeight = fontSize * 1.15;
+  const padding = Math.round(height * 0.05);
+  const barHeight = Math.round(lines.length * lineHeight + padding * 2);
+
+  const barY = position === "top" ? 0 : position === "bottom" ? height - barHeight : Math.round((height - barHeight) / 2);
+  const firstLineY = barY + padding + fontSize * 0.85;
+  const centerX = Math.round(width / 2);
+
+  const svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="${barY}" width="${width}" height="${barHeight}" fill="#000000" opacity="0.55"/>
+    <text x="${centerX}" y="${firstLineY}" font-family="Arial, Helvetica, sans-serif" font-size="${fontSize}" font-weight="700" fill="#ffffff" text-anchor="middle">${lines
+      .map((line, i) => `<tspan x="${centerX}" y="${firstLineY + i * lineHeight}">${escapeXml(line)}</tspan>`)
+      .join("")}</text>
+  </svg>`;
+
+  return sharp(inputBuffer)
+    .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
+    .jpeg({ quality: 92 })
+    .toBuffer();
 }

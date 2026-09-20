@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as GenerateBody;
     if (!body.assetId) return jsonError("assetId is required");
-    if (!body.headline?.trim()) return jsonError("headline is required");
 
     const asset = await getAsset(body.assetId);
     if (!asset) return jsonError("Unknown asset - upload a product photo first", 404);

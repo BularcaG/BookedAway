@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { CreativeRecord } from "@/lib/store";
+import AddTextToCreative from "./AddTextToCreative";
 
 const TEMPLATE_OPTIONS = [
   { id: "bold-bottom-bar", label: "Bold Bottom Bar" },
@@ -10,8 +11,6 @@ const TEMPLATE_OPTIONS = [
   { id: "deal-card", label: "Deal Card (stars + CTA)" },
   { id: "passthrough", label: "No Overlay (Resize Only)" }
 ];
-
-const OVERLAY_TEMPLATE_IDS = TEMPLATE_OPTIONS.filter((t) => t.id !== "passthrough").map((t) => t.id);
 
 const FORMAT_OPTIONS = [
   { id: "square", label: "Square (Feed 1:1)" },
@@ -36,7 +35,7 @@ export default function GenerateCreatives({
   const [subheadline, setSubheadline] = useState("");
   const [cta, setCta] = useState("Shop Now");
   const [brandColor, setBrandColor] = useState("#2a55d8");
-  const [templates, setTemplates] = useState<string[]>(OVERLAY_TEMPLATE_IDS);
+  const [templates, setTemplates] = useState<string[]>(["passthrough"]);
   const [formats, setFormats] = useState<string[]>(["square", "portrait"]);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -79,17 +78,17 @@ export default function GenerateCreatives({
     <div className="card space-y-4">
       <h2 className="text-lg font-semibold">Step 3 · Generate ad creatives</h2>
       <p className="text-sm text-slate-600">
-        Write your ad copy once. We&apos;ll stamp it onto your photo in every template and size you pick below -
-        that&apos;s your batch of variations to test, exactly like a creative studio would hand you. Already have a
-        finished creative (made elsewhere) and just want it resized to Facebook&apos;s ad sizes with no extra text?
-        Uncheck everything except <strong>&quot;No Overlay (Resize Only)&quot;</strong> below.
+        By default this just crops/resizes your photo - no text added. If you want a template to stamp copy onto
+        it, check one below and fill in a headline first. Prefer to decide on text later, one image at a time?
+        Generate with no text, then click <strong>&quot;+ Add text&quot;</strong> under any result and type the
+        exact words you want - nothing is guessed or reworded for you.
       </p>
 
       {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="label">Headline</label>
+          <label className="label">Headline (only needed if a template below is checked)</label>
           <input className="input" value={headline} onChange={(e) => setHeadline(e.target.value)} placeholder="Handmade candles, 30% off" />
         </div>
         <div>
@@ -145,17 +144,18 @@ export default function GenerateCreatives({
           <p className="label">Pick the ones you want to publish</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {thisAssetCreatives.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => onToggleCreative(c.id)}
-                className={"overflow-hidden rounded-lg border-2 text-left " + (selectedCreativeIds.includes(c.id) ? "border-brand-600" : "border-transparent")}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.url} alt="" className="w-full object-cover" style={{ aspectRatio: c.format === "story" ? "9/16" : c.format === "portrait" ? "4/5" : "1/1" }} />
-                <span className="block px-2 py-1 text-xs text-slate-600">
-                  {c.templateId} · {c.format}
-                </span>
-              </button>
+              <div key={c.id} className={"overflow-hidden rounded-lg border-2 " + (selectedCreativeIds.includes(c.id) ? "border-brand-600" : "border-transparent")}>
+                <button onClick={() => onToggleCreative(c.id)} className="block w-full text-left">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={c.url} alt="" className="w-full object-cover" style={{ aspectRatio: c.format === "story" ? "9/16" : c.format === "portrait" ? "4/5" : "1/1" }} />
+                  <span className="block px-2 py-1 text-xs text-slate-600">
+                    {c.templateId} · {c.format}
+                  </span>
+                </button>
+                <div className="px-2 pb-2">
+                  <AddTextToCreative creative={c} onAdded={(newCreative) => setCreatives([newCreative, ...creatives])} />
+                </div>
+              </div>
             ))}
           </div>
         </div>

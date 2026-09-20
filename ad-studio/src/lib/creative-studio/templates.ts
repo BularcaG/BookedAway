@@ -16,12 +16,12 @@ interface RenderInput {
   brandColor: string;
 }
 
-function escapeXml(text: string): string {
+export function escapeXml(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 /** Very small greedy word-wrapper - good enough for short ad headlines/CTAs. */
-function wrapText(text: string, maxCharsPerLine: number, maxLines: number): string[] {
+export function wrapText(text: string, maxCharsPerLine: number, maxLines: number): string[] {
   const words = text.trim().split(/\s+/).filter(Boolean);
   const lines: string[] = [];
   let current = "";
