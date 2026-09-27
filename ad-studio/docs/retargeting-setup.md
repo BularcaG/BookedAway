@@ -11,10 +11,15 @@ Account facts this was built against (read 2026-09-27):
 | Ad account | `1149260060062188` |
 | Page | `518476831357470` |
 | Pixel / dataset | `506614892042719` |
-| Catalog | `1062467908981064` ("Shopify Product Catalog") |
-| Product set | `29250912057841061` ("All Products", 95 products) |
-| Instagram account linked for ads | none returned |
+| Catalog in use | `2180057345773467` ("Shopify Product Catalog") |
+| Product set in use | `26107768175558888` ("Cozy Mystery", 280 products) |
+| Instagram account | `17841471991833905` (delivery yes, audience creation denied) |
 | Videos in the ad account | none |
+
+There are two catalogs. `ads_catalog_list_catalogs` recommends
+`1062467908981064`, but every live catalog creative uses product sets from
+`2180057345773467` - `26107768175558888` ("Cozy Mystery") most recently. Build
+against the one the working ads use, not the recommended one.
 
 28-day pixel volume: PageView 93,200 / ViewContent 24,688 / AddToCart 2,850 /
 InitiateCheckout 1,472 / Purchase 645.
@@ -29,11 +34,27 @@ Custom Audiences ToS was accepted, and all three audiences now exist.
 | `Retarget - FB Page Engagers (365d)` | `120255330394600110` | 365d |
 | `Exclusion - Purchasers (180d)` | `120255330394310110` | 180d |
 
-Immediately after creation both retargeting audiences reported placeholder sizes
-(exactly 20 and exactly 1,000) with operation status 441, and the Page audience
-showed `delivery_status: INACTIVE`. That is expected while backfill runs. Re-read
-them before launching; if the Page audience is still too small to deliver, launch
-on the site-side pool alone.
+Sizes 16 minutes after creation: the Page audience had filled to 6,400-7,600 and
+gone `delivery_status: ACTIVE`; the site-side pool still read a placeholder 20
+with operation status 441. Backfill across six months of pixel history and eight
+event rules takes longer than the Page one - allow up to 24 hours. Re-read it
+before publishing, and treat a size still at 20 after a day as a broken rule
+rather than slow backfill.
+
+### Instagram engagers - blocked on a permission, not a connection
+
+`ads_get_ig_accounts` returns an empty list, but the created catalog creative
+carries `instagram_user_id: 17841471991833905`, so an Instagram account IS
+attached and IS usable for delivery. Creating an audience from it fails with:
+
+    error 2654 / subcode 1713140 - No permission on event source:
+    Do not have audience creation permission on one or more event
+    sources (Id 17841471991833905)
+
+So the IG leg needs audience-creation permission granted on that Instagram
+account, not a new connection. Once granted, add it as a fourth audience with
+event source `{"type":"ig_business","id":"17841471991833905"}` at 365 days and
+include it in the ad set alongside the other two.
 
 ## Why this is three audiences and not one
 
@@ -160,18 +181,63 @@ Two independent reasons:
 
 This leg gets added later, once video creative is actually running.
 
-## The ad set
+## Staged campaign (draft, 2026-09-27)
 
-One ad set ("one asset"):
+Created through the Meta MCP in draft state - nothing is live until the campaign
+is published from Ads Manager.
 
-- Included audiences: the site-side pool **and** the engagement pool (OR).
-- Excluded audience: `Exclusion - Purchasers (180d)`.
-- Objective `OUTCOME_SALES`, optimization `OFFSITE_CONVERSIONS`, event `PURCHASE`.
-- Advantage+ Audience **off** - it would expand past the retargeting pool, which
-  defeats the purpose.
-- Budget: ABO is simplest while this is the only retargeting ad set. CBO only
-  matters once there is more than one ad set to split across.
-- Ads inside: the catalog / dynamic product ad off product set
-  `29250912057841061`.
+| Object | ID | Settings |
+| --- | --- | --- |
+| Campaign `Retargeting` | `120255330426190110` | `OUTCOME_SALES`, AUCTION, ABO (no campaign budget) |
+| Ad set `Retargeting - All Warm (180d)` | `120255330427080110` | $25/day, `LOWEST_COST_WITHOUT_CAP`, `OFFSITE_CONVERSIONS`, `IMPRESSIONS`, destination `WEBSITE` |
+| Creative `Retargeting - Cozy Mystery Catalog` | `2140508583526929` | catalog carousel on product set `26107768175558888` |
+| Ad `R1.1 - Cozy Mystery Catalog` | `120255330427870110` | conversion domain `bookedaway.shop` |
 
-Budget amount and bid strategy are still to be decided.
+Ad set targeting: US, 18-65, including audiences `120255330390980110` and
+`120255330394600110`, excluding `120255330394310110`, with
+`targeting_automation.advantage_audience: 0` so Advantage+ Audience is off and
+delivery cannot expand past the retargeting pool.
+
+Promoted object: `{"pixel_id":"506614892042719","custom_event_type":"PURCHASE"}`.
+
+### Shop surface: off
+
+Decided against the Shop destination on this ad set. Evidence from the account:
+
+| Ad set | Spend | Purchases | ROAS | CPA |
+| --- | --- | --- | --- | --- |
+| VARIANT URL All Products Catalog | $1,406 | 84 | 2.65 | $16.73 |
+| VARIANT URL All Products Catalog + SHOP + Multi | $1,163 | 53 | 1.84 | $21.94 |
+| $26 target | $3,959 | 212 | 2.51 | $18.68 |
+| $26 target + Shop | $166 | 9 | 2.26 | $18.48 |
+
+Shop-on was about 31% worse on both ROAS and CPA in the comparable pair, though
+that pair also differs by "+ Multi" so Shop is not cleanly isolated. Separately,
+`omni_purchase` equals `website purchases` in every month of 2026, meaning no
+recorded purchase has ever happened anywhere but the website - Shop is not
+contributing a second conversion path.
+
+### Two things Meta set on its own
+
+- The creative enrolled `ad_formats: ["CAROUSEL","COLLECTION"]` with
+  `optimization_type: FORMAT_AUTOMATION` and a `da_collection` format
+  transformation, so the ad may render as a Collection. This is Meta's catalog-ad
+  default and is a display format, unrelated to the Shop surface toggle.
+- Every one of the ~85 Advantage+ creative enhancement features came back
+  `enroll_status: OPT_OUT` / `DEFAULT_OFF`, so the creative runs unenhanced.
+
+`self_ai_disclosure` was deliberately left unset - that declaration is the
+advertiser's to make.
+
+### Ad copy (draft, needs approval)
+
+Primary text:
+
+    📚 Still thinking it over?
+    The one you had your eye on is still here — 25% off for a limited time.
+    Shop: bookedaway.shop/sale
+
+Headline `{{product.name}}` (pulled per product from the catalog), description
+`Printed in the USA`, CTA `SHOP_NOW`. The headline and description match the
+live catalog ads; the primary text is retargeting-specific and written for this
+ad set.
