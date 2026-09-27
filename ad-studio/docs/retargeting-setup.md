@@ -190,8 +190,8 @@ is published from Ads Manager.
 | --- | --- | --- |
 | Campaign `Retargeting` | `120255330426190110` | `OUTCOME_SALES`, AUCTION, ABO (no campaign budget) |
 | Ad set `Retargeting - All Warm (180d)` | `120255330427080110` | $25/day, `LOWEST_COST_WITHOUT_CAP`, `OFFSITE_CONVERSIONS`, `IMPRESSIONS`, destination `WEBSITE` |
-| Creative `Retargeting - Cozy Mystery Catalog` | `2140508583526929` | catalog carousel on product set `26107768175558888` |
-| Ad `R1.1 - Cozy Mystery Catalog` | `120255330427870110` | conversion domain `bookedaway.shop` |
+| Creative `Retargeting - Cozy Mystery Catalog v3` | `1001233043000742` | catalog carousel on product set `26107768175558888`, `instagram_user_id` set |
+| Ad `R1.1 - Cozy Mystery Catalog` | `120255330449760110` | conversion domain `bookedaway.shop` |
 
 Ad set targeting: US, 18-65, including audiences `120255330390980110` and
 `120255330394600110`, excluding `120255330394310110`, with
@@ -229,15 +229,30 @@ contributing a second conversion path.
 `self_ai_disclosure` was deliberately left unset - that declaration is the
 advertiser's to make.
 
-### Ad copy (draft, needs approval)
+### Ad copy - the one standard set, same as every other ad
 
-Primary text:
+There is a single primary text used across the whole account. Do not write
+retargeting-specific variants:
 
-    📚 Still thinking it over?
-    The one you had your eye on is still here — 25% off for a limited time.
+    📚 Cozy Mystery Readers — This One's For You
+    Save 25% For A Limited Time!
     Shop: bookedaway.shop/sale
 
 Headline `{{product.name}}` (pulled per product from the catalog), description
-`Printed in the USA`, CTA `SHOP_NOW`. The headline and description match the
-live catalog ads; the primary text is retargeting-specific and written for this
-ad set.
+`Printed in the USA`, CTA `SHOP_NOW`.
+
+### Always set instagram_user_id explicitly
+
+`ads_create_creative` is inconsistent about attaching the Instagram identity: the
+first catalog creative picked up `instagram_user_id: 17841471991833905` on its
+own, an identical second call did not. A creative without it does not deliver on
+Instagram surfaces, which silently costs half the placements under Advantage+
+placements. Pass `instagram_user_id: "17841471991833905"` on every creative and
+confirm it comes back in the returned spec. When set, Meta also adds
+`instagram_asset_id` and `threads_user_id`.
+
+Creatives are immutable, so fixing copy means a new creative plus a new ad and
+deleting the old draft ad (`ads_update_entity` with `status: DELETED` works on
+drafts). `ads_creative_delete` is not rolled out for this ad account, so
+superseded creatives stay in the library unused - harmless, since no ad
+references them.
