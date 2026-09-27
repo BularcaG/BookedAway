@@ -241,6 +241,44 @@ retargeting-specific variants:
 Headline `{{product.name}}` (pulled per product from the catalog), description
 `Printed in the USA`, CTA `SHOP_NOW`.
 
+### Dynamic per-product links: leave the link field EMPTY
+
+The live catalog creatives (`1599127755345189`, `27600976522914203`,
+`1048904304549766`) return **no** `link_url` at all. That is not an oversight -
+it is what makes them dynamic. Each catalog product carries its own URL:
+
+    https://bookedaway.shop/products/dangerous-woman-t-shirt
+      ?utm_content=Facebook_UA&utm_source=facebook&variant=50247700414739
+
+All 9,120 items in the Cozy Mystery set are `dynamic_ads_eligibility: eligible`.
+The "VARIANT URL" in the ad set names refers to these feed URLs, not to an ad
+setting. Setting any `link_url` is what overrides the dynamic behavior.
+
+**`ads_create_creative` cannot reproduce this.** Two dead ends:
+
+- Omitting `link_url` → `link_url is required for image ads and DA carousel ads.`
+- Passing `{{product.url}}` → the tool prepends a scheme and Meta rejects
+  `https://{{product.url}}` as not a website.
+
+Do not construct a URL pattern as a workaround: `retailer_id` is the Shopify
+variant ID (e.g. `50247700414739`), not the handle, so
+`/products/{{product.retailer_id}}` would 404.
+
+The staged creative therefore carries `https://bookedaway.shop` as a fallback,
+and the Website URL field must be cleared by hand on the draft ad in Ads Manager.
+Meta's docs say product deep links "may override" the default at delivery, but
+clearing the field is the only certain fix.
+
+### Ad format: Collection cannot be turned off from here
+
+`ads_create_creative` has no ad-format parameter. Meta adds
+`asset_feed_spec: {ad_formats: ["CAROUSEL","COLLECTION"], optimization_type:
+"FORMAT_AUTOMATION"}` plus a `da_collection` transformation server-side. To get
+carousel-only, uncheck Collection on the draft ad in Ads Manager.
+
+Whether the live catalog ads have Collection enabled could not be verified -
+`ads_get_creatives` does not expose `asset_feed_spec` among its supported fields.
+
 ### Always set instagram_user_id explicitly
 
 `ads_create_creative` is inconsistent about attaching the Instagram identity: the
