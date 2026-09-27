@@ -181,116 +181,89 @@ Two independent reasons:
 
 This leg gets added later, once video creative is actually running.
 
-## Staged campaign (draft, 2026-09-27)
+## Staged campaign (draft, rebuilt 2026-09-27)
 
-Created through the Meta MCP in draft state - nothing is live until the campaign
-is published from Ads Manager.
+The first attempt was deleted: it accumulated three draft ads (creatives are
+immutable, so each copy fix meant a whole new ad) and the surviving one did not
+match what was built. Rebuilt in one pass by **duplicating a live ad** instead of
+authoring a creative.
 
-| Object | ID | Settings |
-| --- | --- | --- |
-| Campaign `Retargeting` | `120255330426190110` | `OUTCOME_SALES`, AUCTION, ABO (no campaign budget) |
-| Ad set `Retargeting - All Warm (180d)` | `120255330427080110` | $25/day, `LOWEST_COST_WITHOUT_CAP`, `OFFSITE_CONVERSIONS`, `IMPRESSIONS`, destination `WEBSITE` |
-| Creative `Retargeting - Cozy Mystery Catalog v3` | `1001233043000742` | catalog carousel on product set `26107768175558888`, `instagram_user_id` set |
-| Ad `R1.1 - Cozy Mystery Catalog` | `120255330449760110` | conversion domain `bookedaway.shop` |
+| Object | ID |
+| --- | --- |
+| Campaign `Retargeting` | `120255330621980110` |
+| Ad set `Retargeting - All Warm (180d)` | `120255330622970110` |
+| Ad `VARIANT URL Catalog Ad - Retargeting` | `120255330623420110` |
 
-Ad set targeting: US, 18-65, including audiences `120255330390980110` and
-`120255330394600110`, excluding `120255330394310110`, with
-`targeting_automation.advantage_audience: 0` so Advantage+ Audience is off and
-delivery cannot expand past the retargeting pool.
+Draft verified: exactly one ad, `validation_status: VALIDATED`, no active errors.
 
-Promoted object: `{"pixel_id":"506614892042719","custom_event_type":"PURCHASE"}`.
+### Duplicate the ad, never author the creative
 
-### Shop surface: off
+Source ad: `120254655086980110` ("VARIANT URL Catalog Ad 2") from ad set
+`120254655086990110` ("$29 target") in campaign `120254655086910110`
+("BID CAP Campaign 08/13") - $2,992 spent, 138 purchases, 2.15 ROAS.
 
-Decided against the Shop destination on this ad set. Evidence from the account:
+Pass `source_ad_id` to `ads_create_ad` and omit `creative` entirely. This is the
+only way to get the real setup, because the live creative depends on a field
+`ads_create_creative` does not expose:
 
-| Ad set | Spend | Purchases | ROAS | CPA |
-| --- | --- | --- | --- | --- |
-| VARIANT URL All Products Catalog | $1,406 | 84 | 2.65 | $16.73 |
-| VARIANT URL All Products Catalog + SHOP + Multi | $1,163 | 53 | 1.84 | $21.94 |
-| $26 target | $3,959 | 212 | 2.51 | $18.68 |
-| $26 target + Shop | $166 | 9 | 2.26 | $18.48 |
+    template_url_spec.web.url =
+      https://bookedaway.shop/collections/all-products
+        ?first={{product.url | urlencode}}
+        &variant={{product.retailer_id | urlencode}}
+        &limit=16
 
-Shop-on was about 31% worse on both ROAS and CPA in the comparable pair, though
-that pair also differs by "+ Multi" so Shop is not cleanly isolated. Separately,
-`omni_purchase` equals `website purchases` in every month of 2026, meaning no
-recorded purchase has ever happened anywhere but the website - Shop is not
-contributing a second conversion path.
+with `template_data.link` = `https://bookedaway.shop/collections/all-products`.
+That pair is the "VARIANT URL" mechanism: a collection base URL plus the product's
+own URL injected per card. It cannot be reconstructed by guessing, and the earlier
+notes in this doc about clearing the link field were chasing the wrong thing.
 
-### Two things Meta set on its own
+### What the live creative actually carries
 
-- The creative enrolled `ad_formats: ["CAROUSEL","COLLECTION"]` with
-  `optimization_type: FORMAT_AUTOMATION` and a `da_collection` format
-  transformation, so the ad may render as a Collection. This is Meta's catalog-ad
-  default and is a display format, unrelated to the Shop surface toggle.
-- Every one of the ~85 Advantage+ creative enhancement features came back
-  `enroll_status: OPT_OUT` / `DEFAULT_OFF`, so the creative runs unenhanced.
+Confirmed in the duplicated draft:
 
-`self_ai_disclosure` was deliberately left unset - that declaration is the
-advertiser's to make.
+- `body` = the standard primary text; `name` = `{{product.name}}`;
+  `description` = `Printed in the USA`; CTA `SHOP_NOW`
+- `product_set_id` `26107768175558888`, `media_type: CAROUSEL`
+- `instagram_user_id` `17841471991833905`, `threads_user_id` `17841444020950013`
+- **Shop is off**: `destination_spec.native_commerce_experience` has both
+  `product_browsing` and `shop` at `OPT_OUT`
+- `contextual_multi_ads: OPT_OUT`
+- `format_transformation_spec: [{data_source: ["none"], format: "da_collection"}]`
+  - present but inert, and notably NOT the `FORMAT_AUTOMATION` /
+    `ad_formats: ["CAROUSEL","COLLECTION"]` enrollment that a freshly authored
+    creative gets
+- Three enhancements are **ON** in the winning ad and were carried over as-is:
+  `media_type_automation`, `standard_enhancements_catalog`,
+  `reveal_details_over_time`. Everything else is `OPT_OUT`.
 
-### Ad copy - the one standard set, same as every other ad
+### Ad set settings, copied from `120254655086990110`
 
-There is a single primary text used across the whole account. Do not write
-retargeting-specific variants:
+- `optimization_goal: OFFSITE_CONVERSIONS`, `billing_event: IMPRESSIONS`
+- `promoted_object: {pixel_id: 506614892042719, custom_event_type: PURCHASE,
+  product_set_id: 26107768175558888}` - the product set belongs here too, not
+  only on the creative
+- `geo_locations: {countries: [US], location_types: [home, recent]}`, ages 18-65
+- `attribution_spec`: 7-day click, 1-day view, 1-day engaged video view
+- Automatic placements (no placement fields sent)
 
-    📚 Cozy Mystery Readers — This One's For You
-    Save 25% For A Limited Time!
-    Shop: bookedaway.shop/sale
+Two deliberate deviations from the source, both required by the task:
 
-Headline `{{product.name}}` (pulled per product from the catalog), description
-`Printed in the USA`, CTA `SHOP_NOW`.
+| Setting | Source | Here | Why |
+| --- | --- | --- | --- |
+| Bid strategy / budget | CBO $50/day, Bid cap ($26-$29 per ad set) | ABO $25/day, `LOWEST_COST_WITHOUT_CAP` | Explicitly chosen; a cap set for cold prospecting would mis-price a warm pool |
+| `targeting_automation.advantage_audience` | `1` (on) | `0` (off) | On, Meta treats the custom audiences as suggestions and expands past them, which is not retargeting |
 
-### Dynamic per-product links: leave the link field EMPTY
+The source also carries `targeting_optimization: "expansion_all"`; it is omitted
+here for the same reason.
 
-The live catalog creatives (`1599127755345189`, `27600976522914203`,
-`1048904304549766`) return **no** `link_url` at all. That is not an oversight -
-it is what makes them dynamic. Each catalog product carries its own URL:
+### Audience sizes: 20/20 is a placeholder, not a count
 
-    https://bookedaway.shop/products/dangerous-woman-t-shirt
-      ?utm_content=Facebook_UA&utm_source=facebook&variant=50247700414739
+Over an hour after creation, with `operation_status_code: 200` ("Normal") and
+`delivery_status: ACTIVE`, both website audiences report
+`approximate_count_lower_bound` and `upper_bound` of exactly 20 - including
+`Exclusion - Purchasers (180d)`, which must hold thousands (645 purchases in 28
+days alone). The Page engagers audience reported a real 6,400-7,600.
 
-All 9,120 items in the Cozy Mystery set are `dynamic_ads_eligibility: eligible`.
-The "VARIANT URL" in the ad set names refers to these feed URLs, not to an ad
-setting. Setting any `link_url` is what overrides the dynamic behavior.
-
-**`ads_create_creative` cannot reproduce this.** Two dead ends:
-
-- Omitting `link_url` → `link_url is required for image ads and DA carousel ads.`
-- Passing `{{product.url}}` → the tool prepends a scheme and Meta rejects
-  `https://{{product.url}}` as not a website.
-
-Do not construct a URL pattern as a workaround: `retailer_id` is the Shopify
-variant ID (e.g. `50247700414739`), not the handle, so
-`/products/{{product.retailer_id}}` would 404.
-
-The staged creative therefore carries `https://bookedaway.shop` as a fallback,
-and the Website URL field must be cleared by hand on the draft ad in Ads Manager.
-Meta's docs say product deep links "may override" the default at delivery, but
-clearing the field is the only certain fix.
-
-### Ad format: Collection cannot be turned off from here
-
-`ads_create_creative` has no ad-format parameter. Meta adds
-`asset_feed_spec: {ad_formats: ["CAROUSEL","COLLECTION"], optimization_type:
-"FORMAT_AUTOMATION"}` plus a `da_collection` transformation server-side. To get
-carousel-only, uncheck Collection on the draft ad in Ads Manager.
-
-Whether the live catalog ads have Collection enabled could not be verified -
-`ads_get_creatives` does not expose `asset_feed_spec` among its supported fields.
-
-### Always set instagram_user_id explicitly
-
-`ads_create_creative` is inconsistent about attaching the Instagram identity: the
-first catalog creative picked up `instagram_user_id: 17841471991833905` on its
-own, an identical second call did not. A creative without it does not deliver on
-Instagram surfaces, which silently costs half the placements under Advantage+
-placements. Pass `instagram_user_id: "17841471991833905"` on every creative and
-confirm it comes back in the returned spec. When set, Meta also adds
-`instagram_asset_id` and `threads_user_id`.
-
-Creatives are immutable, so fixing copy means a new creative plus a new ad and
-deleting the old draft ad (`ads_update_entity` with `status: DELETED` works on
-drafts). `ads_creative_delete` is not rolled out for this ad account, so
-superseded creatives stay in the library unused - harmless, since no ad
-references them.
+So website/pixel audiences do not surface real sizes through this API path while
+engagement audiences do. Do not read 20 as a broken rule and do not rebuild on it.
+Check sizes in Ads Manager > Audiences instead.
