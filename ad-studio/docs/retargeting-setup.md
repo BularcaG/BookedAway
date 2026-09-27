@@ -19,24 +19,46 @@ Account facts this was built against (read 2026-09-27):
 28-day pixel volume: PageView 93,200 / ViewContent 24,688 / AddToCart 2,850 /
 InitiateCheckout 1,472 / Purchase 645.
 
-## Blocker: Custom Audiences Terms of Service
+## Status: audiences created 2026-09-27
 
-No custom audience can be created on this ad account until the Custom Audiences
-ToS is accepted once, by the account owner:
+Custom Audiences ToS was accepted, and all three audiences now exist.
 
-    https://www.facebook.com/customaudiences/app/tos/?act=1149260060062188
+| Audience | ID | Retention |
+| --- | --- | --- |
+| `Retarget - Site Visitors OR ATC OR Checkout (180d, minus purchasers)` | `120255330390980110` | 180d |
+| `Retarget - FB Page Engagers (365d)` | `120255330394600110` | 365d |
+| `Exclusion - Purchasers (180d)` | `120255330394310110` | 180d |
 
-Until then every create returns error 2663 ("Terms of service has not been
-accepted").
+Immediately after creation both retargeting audiences reported placeholder sizes
+(exactly 20 and exactly 1,000) with operation status 441, and the Page audience
+showed `delivery_status: INACTIVE`. That is expected while backfill runs. Re-read
+them before launching; if the Page audience is still too small to deliver, launch
+on the site-side pool alone.
 
 ## Why this is three audiences and not one
 
-Meta will not mix pixel-sourced rules and Page/Instagram engagement-sourced
-rules inside a single custom audience object - a website audience and an
-engagement audience are separate objects. The "bundle them into one" step
-therefore happens at the **ad set** level: one ad set includes both audiences
-(which is an OR), and excludes purchasers once. Functionally identical to
-describing it as one audience.
+Page and Instagram engagement live in their own `ENGAGEMENT` audience object;
+they cannot be rules inside a website audience. So the "bundle them into one"
+step happens at the **ad set** level: one ad set includes both retargeting
+audiences (including two audiences *is* the OR) and excludes purchasers once.
+Functionally identical to describing it as one audience.
+
+Note that Meta does mix some sources itself - see the Shops expansion below.
+
+## Meta auto-expanded the site-side audience
+
+The audience was created with three pixel rules. Meta saved eight, adding the
+Facebook Shop as a second event source:
+
+- `shopping_page` / `SHOPS_PAGE_VIEW`
+- `shopping_page` / `VIEW_CONTENT`
+- `shopping_page` / `SHOPS_COLLECTION_VIEW`
+- `shopping_page` / `ADD_TO_CART`
+- `shopping_page` / `InitiateCheckout`
+
+All OR'd in alongside the pixel rules, all on the same 180-day window, with the
+purchaser exclusion still applying. This is free extra pool from a surface the
+pixel does not cover.
 
 ## 1. Site-side pool (WEBSITE subtype)
 
@@ -81,10 +103,32 @@ Name: `Retarget - Site Visitors OR ATC OR Checkout (180d, minus purchasers)`
 }
 ```
 
-`15552000` seconds is 180 days, the maximum for a website audience. At current
-traffic the all-visitors leg alone will be a few hundred thousand people, which
-is broad for a retargeting budget - shortening that one leg to 30 or 60 days
-while leaving AddToCart and InitiateCheckout at 180 is the usual tightening.
+`15552000` seconds is 180 days, the maximum for a website audience.
+
+### Why 180 days and not 60
+
+An earlier draft of this doc recommended shortening the all-visitors leg to 60
+days to avoid paying warm-audience prices for stale browsers. That was wrong for
+this account, because the stale tail it guards against does not exist yet.
+
+Link clicks by month, 2026:
+
+| Period | Spend | Link clicks |
+| --- | --- | --- |
+| Jan-Jul (7 months) | $3,086 | 3,680 |
+| Aug | $5,074 | 16,281 |
+| Sep (26 days) | $6,941 | 12,151 |
+
+The account scaled around 2026-08-10; before that it ran near $15/day. About 88%
+of the year's traffic falls in the last seven weeks. A 60-day window reaches back
+to roughly 2026-07-29 and captures ~28,550 clicks' worth of visitors; 180 days
+reaches back to roughly 2026-03-31 and adds only ~3,075 more, about 11%.
+
+So the shorter window discards people for almost no benefit. Keep 180 days
+everywhere for now.
+
+**Revisit around February 2027**, when six months of post-scale history exists
+and the 180-day pool genuinely is stale-heavy.
 
 ## 2. Engagement pool (ENGAGEMENT subtype)
 
