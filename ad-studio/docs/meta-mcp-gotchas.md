@@ -102,3 +102,36 @@ Ads Manager > Audiences instead.
 - Instagram audience creation is separately gated: the IG account can deliver
   ads but returns error 2654/1713140 on audience creation without the right
   permission.
+
+## `description` on a link creative fails draft validation
+
+`ads_create_creative` writes `link_title` and `link_description` into
+`call_to_action.value`, and Meta has deprecated both there. Any creative built
+with a `description` therefore fails draft validation with:
+
+    Creative Call To Action's Link Title and Link Description Are Deprecated (1815589)
+
+Only `link_description` trips it. A creative built without `description` still
+has `link_title` in its CTA and validates clean, so the fix is simply to omit
+`description` - the field does not render on Facebook Feed single-image ads or
+on Instagram anyway.
+
+The error surfaces on the *ad*, not on the creative: `ads_create_creative`
+returns a soft warning that is easy to read as cosmetic. `ads_get_errors` does
+not help either - it resolves only account-level entities and returns
+"Could not resolve an ad account from entity_ids" for a draft ad ID. Read
+`active_errors` on the `ads_create_ad` response, or from
+`ads_get_ad_entities` with `object_state: draft`.
+
+## `status: DELETED` on a draft ad makes the draft unpublishable
+
+Setting a *draft* ad to `DELETED` is rejected with `Invalid adgroup status`
+(1487839, "You must specify ACTIVE or PAUSED for status field") and leaves the
+object stuck in an invalid state that blocks the whole campaign from
+publishing. Draft ads cannot be removed through the API at all.
+
+Together with the fact that creatives are immutable - `ads_update_entity`
+refuses `creative_id` with "Ad creatives are immutable and cannot be edited in
+place" - this means every creative-level fix costs a new ad, and the superseded
+ones can only be parked (`PAUSED`, renamed `OLD-REMOVE ...`) and then deleted by
+hand in Ads Manager.

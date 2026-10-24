@@ -49,23 +49,27 @@ and use headline `Charming Village T-Shirt`.
 
 | Ad | ID | Creative | Image hash |
 | --- | --- | --- | --- |
-| 4.1 Navy | `120255741545240110` | `1765975538422422` | `0ec6877c3432d3a5c7446bd2b712ef01` |
-| 4.2 Sand | `120255741545840110` | `823212080885951` | `bb6c35528ae43e93de1e05dd5879e34c` |
-| 4.3 Dark Chocolate | `120255741546350110` | `2381679146003297` | `56e6671367801f780d2cd38214b3f94d` |
-| 4.4 Military Green | `120255741546520110` | `2187694065503253` | `7bba45c18b6ee4b4fb889c8c413c538b` |
-| 4.5 Black | `120255741547140110` | `28992019183769487` | `97cefb4ea4490c7319553657f5d4f37a` |
+| 4.1 Navy | `120255741829030110` | `2552163135295175` | `0ec6877c3432d3a5c7446bd2b712ef01` |
+| 4.2 Sand | `120255741829480110` | `1869533724044477` | `bb6c35528ae43e93de1e05dd5879e34c` |
+| 4.3 Dark Chocolate | `120255741830260110` | `2217059092492219` | `56e6671367801f780d2cd38214b3f94d` |
+| 4.4 Military Green | `120255741831230110` | `1636082674765479` | `7bba45c18b6ee4b4fb889c8c413c538b` |
+| 4.5 Black | `120255741837530110` | `1100070182662995` | `97cefb4ea4490c7319553657f5d4f37a` |
 
 ## S5 - Organic Winners
 
 Ad set `120255741521120110`. Each ad links to its own product page and uses that
 product's best-selling colour.
 
-| Ad | ID | Colour used | Link |
-| --- | --- | --- | --- |
-| 5.1 Rolling Ladder Bookshelf | `120255741547580110` | Sand (tied best with Light Blue, 8 each) | `/products/rolling-ladder-bookshelf` |
-| 5.2 Im Sure Its Nothing | `120255741548200110` | Dark Chocolate (8 orders) | `/products/i-m-sure-it-s-nothing-t-shirt` |
-| 5.3 Steeped in Mystery | `120255741548840110` | Navy (7 orders) | `/products/steeped-in-mystery-t-shirt` |
-| 5.4 Book Club Gang | `120255741550670110` | Sport Grey (6 orders) | `/products/book-club-gang-t-shirt` |
+| Ad | ID | Creative | Colour used | Link |
+| --- | --- | --- | --- | --- |
+| 5.1 Rolling Ladder Bookshelf | `120255741838440110` | `1519578086665030` | Sand (tied best with Light Blue, 8 each) | `/products/rolling-ladder-bookshelf` |
+| 5.2 Im Sure Its Nothing | `120255741838670110` | `29181711398185827` | Dark Chocolate (8 orders) | `/products/i-m-sure-it-s-nothing-t-shirt` |
+| 5.3 Steeped in Mystery | `120255741840290110` | `39358435410468860` | Navy (7 orders) | `/products/steeped-in-mystery-t-shirt` |
+| 5.4 Book Club Gang | `120255741840590110` | `1788466825766926` | Sport Grey (6 orders) | `/products/book-club-gang-t-shirt` |
+
+Note 5.1's handle has no `-t-shirt` suffix (`/products/rolling-ladder-bookshelf`)
+while the other four do. All five handles were checked against Shopify and
+resolve to `ACTIVE` products.
 
 ## Shared setup (both ad sets, copied from S3)
 
@@ -76,7 +80,7 @@ product's best-selling colour.
 - `targeting_automation.advantage_audience: 1`, `targeting_optimization: expansion_all`
 - `attribution_spec`: 7-day click, 1-day view, 1-day engaged video view
 - Automatic placements
-- Standard primary text, description `Printed in the USA`, CTA `SHOP_NOW`
+- Standard primary text, no description, CTA `SHOP_NOW`
 - `instagram_user_id: 17841471991833905` set explicitly on every creative
 
 Every enhancement verified `OPT_OUT` / `DEFAULT_OFF` in all nine returned ad
@@ -84,9 +88,42 @@ specs, including `product_browsing`, `standard_enhancements_catalog`,
 `media_type_automation`, `reveal_details_over_time`, `biz_ai`,
 `contextual_multi_ads` and the whole `creative_sourcing_spec`.
 
-## Note on the description field
+## Why there is no description (and the rebuild)
 
-`ads_create_creative` warns that `description` is stored but Facebook Feed does
-not render it on single-image ads, and Instagram has no description line. It is
-saved on all nine creatives for consistency with the rest of the account; do not
-expect it to be visible on feed placements.
+The first nine ads were built with `description: "Printed in the USA"`. Every one
+of them failed draft validation with:
+
+    Creative Call To Action's Link Title and Link Description Are Deprecated (1815589)
+
+`ads_create_creative` writes both `link_title` and `link_description` into
+`call_to_action.value`, and Meta has deprecated them there. Only
+`link_description` actually trips the error - a creative built without
+`description` still carries `link_title` in the CTA and validates clean.
+
+Creatives are immutable and an ad cannot be repointed at a new `creative_id`, so
+the fix was nine new creatives without `description` and nine new ads on them.
+All nine returned `active_errors: []`.
+
+The nine originals are renamed `OLD-REMOVE ...` and set `PAUSED`. They cannot be
+removed through the API - `status: DELETED` on a draft ad is rejected with
+`Invalid adgroup status` (1487839) and leaves the draft unpublishable - so they
+have to be deleted by hand in Ads Manager before publishing.
+
+| Parked ad | ID |
+| --- | --- |
+| OLD-REMOVE 4.1 Navy | `120255741545240110` |
+| OLD-REMOVE 4.2 Sand | `120255741545840110` |
+| OLD-REMOVE 4.3 Dark Chocolate | `120255741546350110` |
+| OLD-REMOVE 4.4 Military Green | `120255741546520110` |
+| OLD-REMOVE 4.5 Black | `120255741547140110` |
+| OLD-REMOVE 5.1 Rolling Ladder Bookshelf | `120255741547580110` |
+| OLD-REMOVE 5.2 Im Sure Its Nothing | `120255741548200110` |
+| OLD-REMOVE 5.3 Steeped in Mystery | `120255741548840110` |
+| OLD-REMOVE 5.4 Book Club Gang | `120255741550670110` |
+
+## S5 was missing its age cap
+
+S4 staged with `age_max: 65`, S5 staged without it, which leaves the upper bound
+open. Fixed by resending S5's whole `targeting` spec with `age_max: 65` - the
+field replaces the entire spec, so `targeting_automation` and
+`targeting_optimization` had to be carried forward unchanged.
