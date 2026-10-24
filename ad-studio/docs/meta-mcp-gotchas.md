@@ -3,6 +3,17 @@
 Hard-won findings from building real campaigns on ad account `1149260060062188`.
 Each one cost a round trip or a rebuild.
 
+## Upload images with ads_creative_upload_media (now rolled out)
+
+As of 2026-10-24 `ads_creative_upload_media` works on this ad account with
+`upload_source: "URL"`, `media_type: "IMAGE"` and a public `media_url`. It
+returns the `hash` directly, so the correct flow is upload -> hash -> creative.
+It also takes an `advertiser_job` argument now.
+
+This supersedes the older workaround of creating a throwaway creative from
+`image_url` just to read its hash back, which left undeletable orphan creatives
+behind. Shopify `.webp` URLs upload fine.
+
 ## Always pass image_hash, never image_url
 
 Passing `image_url` to `ads_create_creative` succeeds, and the creative looks
