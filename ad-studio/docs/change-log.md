@@ -30,6 +30,32 @@ Then per ad set, every 2-3 days, never Mon/Tue:
 Before applying a cut, check ad-level spend share: an ad set's number is often
 dragged down by an ad that is already paused.
 
+## Nov 17 (later) - George's changes, no Claude edits to the account
+
+- **Back Catalog OFF.** Just Released stays on with a raised budget. Reframed
+  deliberately as a discovery budget: George accepts a loss here, the job is to
+  surface products with `$5`+ spend and sub-`$0.75` CPC to promote into their own
+  ads. Claude had recommended cutting all of Discovery on ROAS - wrong lens for
+  a discovery budget. Open: set a monthly ceiling, and a harvest cadence.
+  Just Released holds 49 products, so the product_id breakdown should be close
+  to complete there, unlike the 465-product main catalog.
+- **Grid 3 raised `$15` -> `$25`** (not `$18`).
+- **Grid 2**: G2.4 and G2.5 off (poor clicks over 4 days), G2.1 left running.
+  G2.3 still off; George considering turning it back on.
+- **Reader life**: Mystery Loves Company off, one other off. Left running:
+  Consume more books (sold recently) and I'm With the Banned.
+
+### Claude's read on those, for when we revisit
+
+- **G2.3: leave off.** Lifetime `$418.55`, 1,460 clicks, **16 purchases**,
+  `$26.16` CPA, **1.63 ROAS** - the only Grid 2 ad with a real sample, and it is
+  below breakeven. Its 5.12 over 7 days is 2 sales on `$24.78` in its final two
+  days. G2.1 is 1.83 lifetime on 3 purchases, not the 3+ the ad set shows (that
+  figure is G2.3's residual spend; live ads only Grid 2 is 1.73).
+- **I'm With the Banned**: CPC `$0.58` vs account `$0.45`, CTR 2.73% vs 2.14%.
+  Mid on both, not "low CPC / high CTR". Letting it reach `$50`-`$75` before
+  judging is still right.
+
 ## Nov 17
 
 - **S5 Charming Village reversed**: Navy back ON, Sand OFF. Monitoring restarts
@@ -107,3 +133,27 @@ has been the more reliable read.
   so product analysis is always a partial sample.
 - An ad set's 7-day ROAS keeps the spend of ads paused during that window for
   up to a week afterwards.
+
+## Budget tiers (agreed Nov 17)
+
+Replaces percentage laddering at small budgets, where +20% of `$15` is `$3` and
+decides nothing.
+
+| Tier | Budget | Rule |
+| --- | --- | --- |
+| Test | `$15`/day, fixed | No laddering. Hold until 10+ purchases, then promote or kill. |
+| Promote | one jump to `$50` | On 10+ purchases at 2.5+. Expect a 3-5 day dip; do not judge inside it. |
+| Scale | `$50`+ | +25% every 3 days. Percentages start working once the base is real. |
+
+Gate on **purchase count first, ROAS second**. At `$15`/day a 7-day ROAS is 4-5
+data points, which is what misled on Sand, G2.5 and Navy.
+
+George's open concern, which is partly right: a big jump destabilises an ad set
+more at a small base than a large one, so `$50` -> `$100` feels safer than
+`$12.50` -> `$50`. See the marginal-returns note below.
+
+Why it matters structurally: at a `$22` CPA an ad set needs roughly `$155`/day to
+reach the 50 conversions a week that exit learning. `$15`/day gives ~5. Ten ad
+sets at `$15` are ten things that cannot learn. S3 - Copy at `$150`/day does 46
+purchases a week and holds 2.15 - the only ad set with enough budget to
+optimise, and the best performer.
