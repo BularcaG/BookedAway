@@ -157,3 +157,88 @@ reach the 50 conversions a week that exit learning. `$15`/day gives ~5. Ten ad
 sets at `$15` are ten things that cannot learn. S3 - Copy at `$150`/day does 46
 purchases a week and holds 2.15 - the only ad set with enough budget to
 optimise, and the best performer.
+
+## Sleeper test shortlist (Nov 17)
+
+Ten designs to test as two ad sets of five. Selection rule: real Shopify sales
+with almost no ad spend behind them (latent demand), or tiny spend that bought
+abnormally cheap clicks (working hook, never funded).
+
+Data: Meta `product_id` breakdown Aug 19 - Nov 17 (four pulls, 1,000-row cap)
+joined to Shopify product sales 90d and variant sales 180d. No Clarity tool was
+available in the session, so there is no heatmap input in this.
+
+### Ad Set A - latent demand (never advertised)
+
+| Design | Shopify 90d | Ad spend 90d | Colours |
+| --- | --- | --- | --- |
+| Rolling Ladder Bookshelf | 30 ord / `$979` | `$0.00` | Sand, Light Blue |
+| I'm Sure It's Nothing | 20 ord / `$575` | `$0.13` | Black, Dark Chocolate |
+| Book Club Gang | 8 ord / `$376` | `$0.00` | Sport Grey, Light Blue |
+| Peaceful Village Murder | 10 ord / `$307` | `$0.00` | Sand, Light Blue |
+| I've Been Framed | 8 ord / `$243` | `$0.86` | Black, Navy |
+
+Book Club Gang carries the highest AOV in the store at `$46.23` - it sells in
+pairs.
+
+### Ad Set B - proven hook (micro-tested)
+
+| Design | Shopify 90d | Spend | CPC | CTR | Colours |
+| --- | --- | --- | --- | --- | --- |
+| Steeped in Mystery | 13 ord / `$379` | `$5.84` | `$0.34` | 2.77% | Navy |
+| Tea, Knitting and Mayhem | 10 ord / `$300` | `$26.44` | `$0.27` | 4.39% | Heather Indigo |
+| Cozy Mystery Defined | 8 ord / `$224` | `$3.07` | `$0.19` | 6.72% | Black, Navy |
+| Bookish Eye Chart | 8 ord / `$211` | `$2.92` | `$0.22` | 4.18% | Navy, Dark Heather |
+| Small Village Warning | 6 ord / `$182` | `$5.36` | `$0.14` | 6.12% | Navy, Dark Heather |
+
+Account baseline at the time: CPC `$0.45`, CTR 2.14%. Small Village Warning
+bought clicks 3x cheaper; Cozy Mystery Defined nearly doubled the best-ever
+account CTR. Both on under `$6`, so small samples.
+
+### Colour rule found in the variant data
+
+Colour comes from Shopify variant sales, never Meta clicks (Charcoal led every
+Meta click metric on Charming Village and had sold one shirt in 90 days).
+
+| Design character | Winning ground | Evidence |
+| --- | --- | --- |
+| Illustrative / cozy scene | Sand + Light Blue | Rolling Ladder: Sand 14, LB 10 of 33 |
+| Text-heavy one-liner | Black + Dark Chocolate | I'm Sure It's Nothing: Black 10, DC 9 of 24 |
+| Bold graphic statement | Navy | Steeped in Mystery: Navy 8 of 14 |
+| Vintage / heathered | Heather Indigo | Tea Knitting: HI 6 of 10 |
+
+Two have genuinely flat colour data and their colours are assigned by the rule
+above, not their own sales - treat as unproven:
+
+- Cozy Mystery Defined: Navy 2 / Black 2 / Military Green 2
+- Bookish Eye Chart: Dark Heather 2 / Military Green 2 / Navy 2 / Black 2
+
+Military Green appears twice in each and has never been pushed anywhere. If
+either shows life, Military Green is the next variant to add.
+
+### Build notes
+
+- XL, L and 2XL carry nearly all of these. Catalog ads pick a variant image,
+  not a size, so check L/XL/2XL are in stock.
+- CBO will not split evenly across five products. Meta concentrates on whoever
+  bites first, which suits a sleeper hunt, but a dud can absorb the ad set.
+  Check the `product_id` breakdown at day 5-7 and prune.
+- `$15`/day across five is ~`$3`/day each. At a `$12` CPA the **ad set** reaches
+  the 10-purchase threshold in ~10 days; an individual **product** would take
+  over a month. So judge the ad set on purchases, and judge products on the
+  day 5-7 breakdown prune.
+
+### Not a sleeper - do not put in these ad sets
+
+**Cabot Cove Population Declining**: 33 orders, `$994` in 90 days on `$63.59`
+spend, `$0.23` CPC, 3.67% CTR across 278 clicks. Navy 21 of 33, Black 11. That
+is a funded-but-starved winner with a real sample. Belongs in Scaling - Winners
+with Grid and Murder Capital, not in a `$15`/day test beside four unknowns.
+
+### Caveat to carry forward
+
+The revenue-per-ad-dollar ratios on these products are **not ROAS**. Anything
+with `$0`-`$6` of spend earned nearly all its revenue through email, the
+collection page and organic browsing. The thesis is "demand exists without paid
+push," not "this converts at 70x." Expect first paid numbers well below the
+ratio.
