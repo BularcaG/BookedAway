@@ -30,6 +30,45 @@ Then per ad set, every 2-3 days, never Mon/Tue:
 Before applying a cut, check ad-level spend share: an ad set's number is often
 dragged down by an ad that is already paused.
 
+## Nov 17
+
+- **S5 Charming Village reversed**: Navy back ON, Sand OFF. Monitoring restarts
+  today. Whole-run numbers that justify it:
+
+  | Ad | Spend | Clicks | Purch | CPA | ROAS |
+  | --- | --- | --- | --- | --- | --- |
+  | Navy | `$186.74` | 417 | 8 | `$23.34` | **2.23** |
+  | Sand | `$106.93` | 199 | 3 | `$35.64` | 1.26 |
+
+  Navy was paused on Nov 11 off a bad 7-day window (0.80) while Sand showed
+  3.44 on one purchase and `$10.14` of spend. Claude endorsed that call and
+  under-weighted the small sample. Navy was the better ad throughout.
+  The 4.75 Navy currently shows over 7 days is residual spend from before the
+  pause, not a signal.
+  **Decision point: ~Dec 1**, when Navy should reach 10 purchases at `$15`/day.
+
+- Since Nov 13, George also: raised S3 - Copy `$100` -> `$150` (held at 2.15,
+  `$18.90` CPA over 46 purchases), paused S3 - Copy Collection page, paused
+  VARIANT URL All Products Catalog, added the `Design Only` and `Reader life`
+  ad sets.
+
+- 7-day account read: `$2,184.88` spend, 90 purchases, ROAS **1.76** headline /
+  **1.84** live ads only / **2.02** excluding Discovery.
+  Discovery is the bleed: Just Released `$113.19` for 1 sale (0.31), Back
+  Catalog `$70.88` for 0.
+
+- Grid 2 experiment result: G2.1 delivered (2.01 on `$46.78`), G2.5 did not
+  (`$10.58`, zero purchases). The ad set's 3.13 headline is G2.3's residual
+  spend; live ads only it is 1.73.
+
+### Standing rule added
+
+Do not judge an individual **ad** on fewer than ~10 purchases (roughly
+`$250`-`$350` of spend at current CPAs). At `$15`/day one ad produces 4-5
+purchases a week, so a 7-day window is 4-5 data points and one sale shifting
+days swings ROAS by half. Ad **set** level reaches 10 purchases far sooner and
+has been the more reliable read.
+
 ## Nov 12
 
 - Grid 3 budget `$40` -> `$15`. The `$40` day spent `$54.21` for 0 purchases
