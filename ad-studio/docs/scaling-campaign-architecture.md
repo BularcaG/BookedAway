@@ -144,6 +144,80 @@ cap campaigns spent **`$26.66` combined over 7 days for zero purchases**, and
 13 of their 14 ad sets never exited learning. They are set to `$125`/day
 combined and could start spending unpredictably.
 
+## Slots 4 and 5: format split (Nov 18)
+
+George added slots 1 and 2 (the single-image post IDs) and asked for one grid
+and one catalog ad to diversify ad types.
+
+### Catalog slot -> `VARIANT URL+SHOP Catalog Ad`
+
+- **Post ID:** `518476831357470_122181500744746577`
+- `Cozy Mystery Catalog` / `VARIANT URL All Products Catalog + SHOP + Multi`
+- Ad `120250379695950110` / creative `1376120707687735`
+- Lifetime 90 purchases, 1.72. **Last 7d: `$134.02`, 8 purch, 2.19, CPA `$16.75`.**
+
+The only catalog ad that **recovered** from the October break (Oct 1.19 -> Nov
+1.84 -> 2.19 last week) rather than dying in it. Likely the Shop destination and
+multi-advertiser placements. For contrast, `VARIANT URL Catalog Ad 3` - the
+222-purchase all-time leader - spent `$0.81` in the last 7 days. Dormant.
+
+### Grid slot -> `G3.6`, as a deliberate exception
+
+**Neither grid ad actually qualifies:**
+
+| | `G3.6` | `G2.3` |
+| --- | --- | --- |
+| Lifetime purch | 6 | **16** |
+| Lifetime ROAS | **2.41** | 1.63 |
+| Oct / Nov | - | 2.05 / 1.50 |
+| Last 7d | **2.67** on `$96.11` | 5.12 on `$24.78` |
+| CTR | 3.12% | 3.81% |
+
+- `G2.3` passes volume, fails ROAS. 1.63 lifetime is under the 2.0 graduation
+  bar and under the 1.8 eviction bar - it would be evicted on arrival.
+- `G3.6` passes ROAS, fails volume by 4 purchases.
+
+**Take `G3.6`:**
+- **Post ID:** `518476831357470_122200221446746577`
+- `Testing Campaign` / `Grid 3` / ad `120255741106640110` / creative `2251291535728416`
+
+The deciding reason is copy, not performance: **`G3.6` is the only grid ad with
+different text.** With slot 2 and the catalog slot in, the campaign is already
+at its 2-ad cap on "Cozy Mystery Readers / Save 25%". `G2.3` would be a third -
+the exact setup that killed five catalog ads in one month.
+
+### Correction to the Nov 18 bench table
+
+`G2.3` was listed as "declining 2.05 -> 1.50". True monthly, but its **last 7
+days are 5.12**, its best stretch; the Nov figure is dragged by ~`$296` of
+earlier-November spend. It is ambiguous, not dying. Calling a trend off the
+monthly number alone is the same small-sample error as the Navy call.
+
+### `G3.6` is the "Book Lovers" copy variant
+
+Its body reads "Book Lovers - This One's For You", not "Cozy Mystery Readers".
+This is the copy change George asked about earlier. It is now his best-rate grid
+ad: 2.41 lifetime, 2.67 last 7d, CTR 3.12% against an account average of 2.14%.
+Six purchases is too few to call, but the early signal favours "Book Lovers".
+
+### Standing risk: the shared offer line
+
+Three of the four All Stars carry **"Save 25% For A Limited Time!"**:
+
+| Ad | Hook line | Offer line |
+| --- | --- | --- |
+| `3.2` | "Nothing to worry about..." | **none** |
+| `3.3` | Cozy Mystery Readers | Save 25% |
+| `+SHOP Catalog` | Cozy Mystery Readers | Save 25% |
+| `G3.6` | Book Lovers | Save 25% |
+
+The October failure was that offer line going stale across five ads at once. The
+copy-diversity rule should be read on the **offer line**, not just the full text.
+
+`3.2` is the only hedge - no discount framing at all - and it is also the
+highest-volume performer. The one ad not leaning on the discount is the one
+working best. Worth a test of a non-discount variant for the others.
+
 ## First read
 
 Do not judge it for **14 days**. At `$75`/day and a `$19` CPA that is ~55
