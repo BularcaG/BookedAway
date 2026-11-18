@@ -242,3 +242,96 @@ with `$0`-`$6` of spend earned nearly all its revenue through email, the
 collection page and organic browsing. The thesis is "demand exists without paid
 push," not "this converts at 70x." Expect first paid numbers well below the
 ratio.
+
+## Scaling campaign: abandoned, and why (Nov 18)
+
+The `Scaling - Winners` draft (`120256023439890110`) no longer exists. The draft
+list is empty and the campaign ID returns "not campaign entities in the
+requested ad account." Nothing to resume.
+
+**Decision: do not rebuild it.** The reasoning matters more than the decision.
+
+By the 10-purchase rule, exactly one ad in the account is proven:
+
+| Ad | Ad set | 30d purch | 7d purch | 7d ROAS | 7d CPA |
+| --- | --- | --- | --- | --- | --- |
+| 3.2 | S3 - Copy | 79 | 45 | 2.10 | `$18.81` |
+
+Next best over 30d: Charming Navy 8, 3.1 7, G3.6 6, G3.9 4. All under the bar.
+
+A CBO of "winners" fails both ways:
+
+- **With 3.2 in it**: CBO funds whoever converts first, so 3.2 takes the budget.
+  That re-runs the main ad in a second campaign, bidding into its own audience
+  and splitting its learning signal. S3 - Copy is the **only ad set at learning
+  SUCCESS** in the account. Do not fork it.
+- **Without 3.2**: nothing proven is in it. A test ad set with a scaling label.
+
+The real diagnosis: the account is stuck near `$300`/day because it has **one
+engine**. A scaling campaign re-spends on the first engine instead of building a
+second one.
+
+## Ad set table, 7d (Nov 18)
+
+| Ad set | Budget/day | Spend | Purch | ROAS | CPA | CTR | Learning |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Grid 2 - Murder Capital | `$12.50` | `$102.40` | 7 | **3.13** | **`$14.63`** | 3.65% | FAIL, 12 conv |
+| S3 - Copy | `$150` | `$869.27` | 46 | 2.15 | `$18.90` | 2.14% | **SUCCESS** |
+| S3 | `$20` | `$140.67` | 7 | 1.83 | `$20.10` | 1.97% | FAIL, 47 conv |
+| Grid 3 | `$25` | `$145.51` | 4 | 1.76 | `$36.38` | 3.23% | LEARNING, 4 conv |
+| Design Only | `$15` | `$74.56` | 2 | 1.67 | `$37.28` | 2.28% | LEARNING |
+| S5 - Charming Village | `$15` | `$103.63` | 3 | 1.61 | `$34.54` | 2.17% | FAIL, 11 conv |
+| S3 - Copy Collection page | `$25` | `$159.90` | 5 | 1.11 | `$31.98` | 1.72% | PAUSED |
+| Reader life | `$15` | `$99.63` | 3 | 1.09 | `$33.21` | 2.12% | LEARNING |
+
+Account 7d: `$2,183.44` spend -> `$3,838.16` revenue = **1.76 blended ads ROAS**.
+
+## Advice given Nov 18 (George executes)
+
+1. **Grid 2 - Murder Capital `$12.50` -> `$25`.** Best ROAS *and* best CPA in the
+   account, on the smallest funded budget. Matches the tier rule (15 and under
+   bumps first to 25). This **is** the scaling move; it already exists.
+2. **Discovery off or capped to `$10`.** `$184.07` -> `$34.86` over 7d, 0.19
+   ROAS, roughly `$26`/day of loss. Funds everything else here.
+3. **Grid 3: prune, do not fund.** Grid 3 spent `$145.51` for 4 purchases /
+   `$256.53`. G3.6 alone spent `$96.11` for **4 purchases / `$256.53`** -
+   identical. The other `$49` produced zero. G3.6 alone is 2.67 ROAS; siblings
+   drag the set to 1.76. Pause G3.8/G3.7/G3.10 so G3.6 gets the full `$25`. Do
+   not raise the budget until the set's number reflects G3.6.
+   Same spend-share trap as ad 3.2 in the Collection page set. Recurring in the
+   grid ad sets.
+4. **Cabot Cove: build it as a one-product catalog ad set, `$15`/day.** Catalog
+   `2180057345773467` (same one the live Cozy Mystery set `26107768175558888`
+   uses), product set filtered to Cabot Cove Population Declining only. Its 33
+   orders came from catalog delivery, so this concentrates budget on the asset
+   that already works - no new creative gamble, no missing post ID. The
+   single-image version comes later as a creative test beside it.
+   Caveat: a one-product catalog ad loses Meta's product-to-person matching and
+   can come in under the broad catalog. It is a test.
+
+Budget math: Discovery off frees ~`$26`/day; Grid 2 takes `$12.50`, Cabot Cove
+`$15`. Net -`$1.50`/day, so no increase in total spend.
+
+Deferred: the `$24`/`$28`/`$32` bid cap ABO ladder. The three live bid cap
+campaigns spent `$26.66` combined over 7d for **zero purchases** - still priced
+out. Worth doing, but after items 1-3.
+
+## Correction to the Nov 17 sleeper note
+
+I wrote "Navy is 21 of its 33 sales, Black is 11" for Cabot Cove Population
+Declining as though Navy had won a colour contest. It had not: **the product
+only exists in Black and Navy.** 12 catalog variants = 2 colours x 6 sizes, all
+in stock and `eligible`.
+
+Navy beating Black 2:1 is still real, but the missed point is the opportunity: a
+design with 33 orders and a `$0.23` CPC is offered in only two colourways.
+Adding **Dark Chocolate** and **Sand** - the grounds carrying the other proven
+designs - is likely worth more than any ad-level change.
+
+Feed checked for a price mismatch (a common silent killer): clean. `$39.99` list
+/ `$29.99` sale, matching the store, so Meta shows a visible discount.
+
+## Already built by George (Nov 18)
+
+`Sleeper 1` and `Sleeper 2` ad sets are live at `$15`/day each, `$0` spent.
+Leave them to spend; first read at day 5-7 on the `product_id` breakdown.
