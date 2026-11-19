@@ -394,3 +394,54 @@ only funded cap that overshot its own ceiling, and `$29`'s 2.07 came with a
 `$22.39` CPA.
 
 Sequencing: run this after All Stars has had its 14-day read, not alongside it.
+
+## Consolidated plan (Nov 19)
+
+Detail lives in `scaling-campaign-architecture.md` and the Nov 18/19 entries
+above. This is the running order.
+
+### Now
+
+1. **Launch All Stars.** One ad set, 4 ads, CBO `$75`/day, Highest Volume,
+   7d click / 1d view, product set `26107768175558888` on the ad set.
+   Post IDs verified Nov 19 against the API:
+   - `518476831357470_122200884098746577` - 3.2, voice hook
+   - `518476831357470_122196922484746577` - 3.3, discount hook
+   - `518476831357470_122181500744746577` - +SHOP catalog
+   - `518476831357470_122200221446746577` - G3.6, Book Lovers grid
+2. **Fund it:** Discovery off (0.19 ROAS, ~`$26`/day), `S3 - Copy` `$150` -> `$100`.
+3. **Pause the originals once All Stars spends:** 3.2 in `S3 - Copy`, 3.3 in
+   `S3`, +SHOP in `Cozy Mystery Catalog`. Objects stay, just paused.
+4. **Grid 2 - Murder Capital `$12.50` -> `$25`.** Best ROAS (3.13) and CPA
+   (`$14.63`) in the account on its smallest budget.
+
+### Then: 14 days, no changes
+
+At `$75`/day that is ~55 purchases. Before that the number is noise.
+
+### After the read: the bid cap
+
+One ad set, **`$26` cap, `$50`/day, +SHOP creative only**
+(`518476831357470_122181500744746577`). Not the old catalog post
+(`518476831357470_122190359684746577`, dead since Oct, `$0.81` in 7 days - a cap
+on a dead creative stalls on day one). Not two ad sets. Not a ladder.
+
+Waiting is deliberate: the cap should be set from the CPA All Stars actually
+achieves, not August's. `$17` CPA -> `$26` cap; `$22` CPA -> `$28`-`$30`.
+
+### Parked, in order
+
+- Grid 3 prune (G3.8, G3.7, G3.10, G3.1, G3.3 spend with zero purchases)
+- Cabot Cove one-product catalog ad set, `$15`/day
+- Archive old bid cap / cost cap campaigns (`$26.66`/7d for zero purchases,
+  13 of 14 ad sets never learned, `$125`/day combined if they wake)
+
+### Standing risk
+
+Three of the four All Stars carry "Save 25% For A Limited Time!" - the line that
+took out five catalog ads at once in October. 3.2 is the only hedge and is also
+the highest-volume performer.
+
+**Highest-value creative work for the next two weeks: a second ad with no
+discount in the copy**, to separate whether 3.2 wins on the joke or on the
+absence of the offer.
