@@ -445,3 +445,82 @@ the highest-volume performer.
 **Highest-value creative work for the next two weeks: a second ad with no
 discount in the copy**, to separate whether 3.2 wins on the joke or on the
 absence of the offer.
+
+## Account review (Nov 19, 7d windows)
+
+Account: `$2,192` -> `$3,936`, **1.80 blended** (up from 1.76 on Nov 18).
+**Three ad sets at learning SUCCESS**, up from two.
+
+### What moved since Nov 18
+
+| Ad set | Budget | Nov 18 | Nov 19 | |
+| --- | --- | --- | --- | --- |
+| **S3** | `$20` | 7 purch, 1.83 | **10 purch, 2.48** | now SUCCESS |
+| **+SHOP** (Cozy Mystery) | `$20` | 8 purch, 2.19 | **9 purch, 2.56** | SUCCESS |
+| S3 - Copy | `$150` | 46 purch, 2.15 | 49 purch, 2.09 | flat |
+| Grid 2 | `$12.50` | 7 purch, **3.13** | 5 purch, 2.17 | down |
+| Grid 3 | `$25` | 4 purch, 1.76 | 4 purch, 1.66 | down |
+| Reader life | `$15` | 3 purch, 1.09 | 3 purch, 1.00 | down |
+| Discovery "Just Released" | `$15` | - | 1 purch, **0.28** | bleeding |
+
+### The starvation problem
+
+| Ad set | ROAS | CPA | Purch | Learning | Budget |
+| --- | --- | --- | --- | --- | --- |
+| +SHOP | **2.56** | **`$14.55`** | 9 | SUCCESS | ~`$20` |
+| S3 | **2.48** | **`$14.28`** | 10 | SUCCESS | `$20` |
+| S3 - Copy | 2.09 | `$18.58` | 49 | SUCCESS | `$150` |
+
+`$150`/day on the weakest SUCCESS unit, `$40`/day on the two best. S3 crossed 10
+purchases at 2.48 - it passes the graduation bar outright.
+
+### Advised Nov 19 (George executes)
+
+**Off:**
+1. Discovery -> "Just Released": `$123.49` for 1 purchase, 0.28 ROAS, `$123` CPA.
+   ~`$17.60`/day. Biggest single leak. (Back Catalog and Proven already paused.)
+2. Reader life: `$108.58`, 3 purchases, 1.00 ROAS. Every ad inside 1.17-1.21.
+   ~`$15.50`/day.
+
+**Scale:**
+1. S3 `$20` -> `$50`
+2. Cozy Mystery Catalog `$20` -> `$40`
+3. Grid 2 `$12.50` -> `$25` (advised Nov 18, still not done)
+
+Funded by the two cuts (`$33`/day) plus S3 - Copy `$150` -> `$120`.
+
+### Two misleading numbers
+
+- **S5 - Charming Village reads 2.10** but all of it is from
+  `Charming village black_Sand`, which is **paused**. The live ad, Navy, has
+  spent `$10.79` with **zero purchases**. The Navy call has not validated. Same
+  paused-ad-in-window quirk logged Nov 17.
+- **Grid 3 reads 1.66** but G3.6 alone is **2.39 on `$107.48`** with all 4
+  purchases. The drag is G3.4 and G3.2 spend lingering after pausing. Grid 3 is
+  now essentially G3.6 and is fine.
+
+### Structural: new ad sets cannot get delivery
+
+Five for five, all created in the last three days:
+
+| New ad set | Budget available 7d | Spent |
+| --- | --- | --- |
+| Sleeper 1 | ~`$105` | `$5.91` |
+| Sleeper 2 | ~`$105` | `$6.06` |
+| Scaling Campaign | ~`$75` | `$0.43` |
+| Ad Set 17 | ~`$25` | `$0` |
+| Ad Set 18 | ~`$25` | `$0` |
+
+Established ads win the auctions; new creative cannot get enough delivery to
+prove itself. **The sleeper test has effectively not run** - `Book Club Gang`
+and `cozy mystery_Black` have zero impressions, `Small Village Warning` has
+three.
+
+Likely the same auction-dedupe mechanism as the Scaling Campaign clones
+(1,270:1 against them). Not certain, but five-for-five is a pattern. Taking
+`$33`/day of established delivery off the board should give new ad sets room.
+
+Solve this before launching anything else new, or the next test repeats it.
+
+`Ad Set 17` and `Ad Set 18` (`$12.50`/day each, `$0` spent) are George's; contents
+unknown here.
