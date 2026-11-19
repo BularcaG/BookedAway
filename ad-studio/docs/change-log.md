@@ -335,3 +335,62 @@ Feed checked for a price mismatch (a common silent killer): clean. `$39.99` list
 
 `Sleeper 1` and `Sleeper 2` ad sets are live at `$15`/day each, `$0` spent.
 Leave them to spend; first read at day 5-7 on the `product_id` breakdown.
+
+## Bid cap headroom pattern (Nov 19)
+
+Every bid cap ad set ever run, by lifetime numbers:
+
+| Cap | Campaign | Spend | Purch | CPA | ROAS |
+| --- | --- | --- | --- | --- | --- |
+| `$26` | 08/10 | `$4,375.89` | **222** | `$19.71` | **2.36** |
+| `$29` | 08/13 | `$3,851.24` | **172** | `$22.39` | 2.07 |
+| `$26` + Shop | 09/19 | `$758.72` | 31 | `$24.47` | 1.92 |
+| `$23` | 08/09 | `$400.77` | **20** | `$20.04` | **2.00** |
+| `$25` | 08/10 | `$118.67` | 9 | `$13.19` | 2.58 |
+| `$28` | 08/13 | `$236.50` | 8 | `$29.56` | 1.70 |
+| `$27`/`$24`/`$26`/`$22`/`$21`/`$20` | various | <`$75` ea | 0-3 | - | noise |
+
+Four caps clear the 10-purchase bar: `$26`, `$29`, `$26`+Shop, `$23`. Three
+cleared 2.0 ROAS.
+
+### The finding: headroom predicts ROAS, monotonically
+
+Sorted by the gap between the cap and the CPA actually achieved:
+
+| Cap | CPA achieved | Headroom | ROAS |
+| --- | --- | --- | --- |
+| `$25` | `$13.19` | **47%** | 2.58 |
+| `$26` | `$19.71` | 24% | **2.36** |
+| `$29` | `$22.39` | 23% | 2.07 |
+| `$23` | `$20.04` | 13% | 2.00 |
+| `$26` + Shop | `$24.47` | 6% | 1.92 |
+| `$28` | `$29.56` | **-6%** | 1.70 |
+
+No exceptions. When the cap sits tight against what Meta can buy, delivery
+scrapes the bottom of what is available at that price and ROAS falls with it.
+
+Note `$28` achieved a CPA **above its own cap** (`$29.56`). A bid cap limits the
+bid, not the realised CPA.
+
+### Supersedes the `$24`/`$28`/`$32` ABO ladder
+
+That earlier recommendation predates this audit and should not be used:
+
+- A 3-rung ladder at `$20`/day each reproduces the fragmentation that left 13 of
+  14 bid cap ad sets never exiting learning. The one that worked ran
+  `$64`-`$73`/day.
+- `$32` would never bind against a current achievable CPA of `$15`-`$20`. A cap
+  that far above CPA is Highest Volume with extra steps.
+
+### Current recommendation
+
+**One ad set, cap `$26`, `$50`-`$75`/day.** `$26` has 222 purchases behind it and is
+the only bid cap ad set that ever exited learning. Current CPAs (Grid 2
+`$14.63`, +SHOP `$16.75`, 3.2 `$18.32`) are better than August's, so `$26` gives
+more headroom now than it did then.
+
+`$24` is the defensible tighter alternative. **Do not go above `$28`** - it is the
+only funded cap that overshot its own ceiling, and `$29`'s 2.07 came with a
+`$22.39` CPA.
+
+Sequencing: run this after All Stars has had its 14-day read, not alongside it.
