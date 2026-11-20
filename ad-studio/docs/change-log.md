@@ -524,3 +524,78 @@ Solve this before launching anything else new, or the next test repeats it.
 
 `Ad Set 17` and `Ad Set 18` (`$12.50`/day each, `$0` spent) are George's; contents
 unknown here.
+
+## Nov 19 day review
+
+**Profitable day, confirmed against Shopify.**
+
+| | Meta | Shopify | Gap |
+| --- | --- | --- | --- |
+| Purchases | 15 | **20** | **-25%** |
+| Revenue | `$808.33` | **`$1,000.63`** | -19% |
+| ROAS on `$450.29` spend | 1.80 | **2.22** | -0.42 |
+
+Wider under-report than the -16% logged Nov 11. **Every Meta ad-set ROAS is
+understated by roughly 20%**, so break-even in Meta's numbers sits near 1.45,
+not 1.8. Use that when judging ad sets.
+
+**Spend `$450.29`, up ~44% from the ~`$313`/day prior average.**
+
+### Standouts
+
+**`Almost Idyllic_Sand`** (Ad Set 17) - the find of the day:
+`$10.47` -> 2 purchases, `$126.83`, **12.11 ROAS, `$5.24` CPA**, CTR 3.70%.
+Produced all of Ad Set 17's results on 60% of its budget. `$63.42` per order -
+multi-item baskets. Two purchases is noise; watchlist, do not scale yet.
+
+**S3 at `$40` - the raise worked with no dip:** `$50.73` -> 4 purchases,
+**3.91 ROAS, `$12.68` CPA**, CTR 2.95%. The Nov 18 zero day was noise, exactly
+as its CPC (`$0.27`, best of 8 days) and CTR (2.90%, highest) indicated.
+
+**S5 - Charming Village:** `$19.05` -> 1 purchase at **`$119.96`**. 6.30 ROAS.
+**Grid 3:** `$26.84` -> 2 purchases, 2.37, `$13.42` CPA, CTR 3.88%. Recovered
+after the prune.
+
+### Problems
+
+1. **S3 - Copy worst day:** `$156.78` -> 5 purchases, **1.69 ROAS, `$31.36`
+   CPA**, CTR down to **1.71%** from 2.1-2.3%, CPC up to `$0.58`. 35% of daily
+   spend. CTR falling *and* CPC rising together is the decay signature, not the
+   noise signature. Watch closely.
+2. **Discovery "Just Released" still running:** `$17.85`, 0 purchases,
+   **CPC `$1.98`** - 4-6x everything else. Flagged four times now.
+3. **Grid 2 still at `$12.50`** with the **highest CTR in the account (4.07%)**.
+   Flagged four times.
+
+### The sleeper test is still not testing the sleepers
+
+Delivery resolved once the Scaling Campaign was paused, but inside each ad set
+one ad takes everything:
+
+| Ad set | Ad taking the budget | Spend | Share |
+| --- | --- | --- | --- |
+| Sleeper 1 | `cozy mystery_Black` (now paused) | `$17.21` | **100%** |
+| Sleeper 2 | `I read past my bedtime dark_Black` | `$17.64` | 97% |
+| Ad Set 18 | `Bookmarks Are for Quitters_Black` | `$15.21` | 88% |
+
+The shortlisted designs - **Rolling Ladder Bookshelf, Book Club Gang, Steeped in
+Mystery, Small Village Warning, Tea Knitting, Peaceful Village Murder, I've Been
+Framed** - all sit at **`$0` spent, 0-1 impressions**.
+
+~`$35`/day is buying a test of two ads that were never on the shortlist, neither
+of which converted. To read the actual sleepers they need ad sets where they
+cannot be crowded out: far fewer ads per ad set, or one each.
+
+### AOV recovery
+
+**`$46.14`** on Nov 19, against `$39.40` during the squeeze and `$44.61` before
+it. If it holds, CPA tolerance rises meaningfully above the `$18`-`$22` the
+plans assume.
+
+### Also live
+
+- `Scaling Campaign` is CAMPAIGN_PAUSED - closed as advised.
+- `Ad Set 19 Cabot Cove` built: `$9.26` over 3 ads, 0 purchases, too early.
+- `Bid Cap 11/19` `$26`: `$3.97`, **CPC `$0.33`**, CTR 3.21%, 374 impressions,
+  0 purchases. Spending but far under budget. Day 2 - check again ~Nov 22; if
+  still under ~`$15`/day, raise the cap to `$28`-`$30`, do not kill it.
