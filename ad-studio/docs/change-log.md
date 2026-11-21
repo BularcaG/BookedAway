@@ -826,3 +826,35 @@ budget Grid 2 could use.
 `$1.62` per ATC - cheapest in the account - converting at 29% on `$11.31`.
 Second independent signal for `$28`. Strengthens the case for taking
 `Bid Cap 11/19` from `$26` -> `$28`.
+
+### Bid cap raised (Nov 21)
+
+`Bid Cap 11/19` ad set `$26` -> **`$28`**. Edited in place rather than rebuilt -
+0 conversions and `$13.60` lifetime spend meant no learning state to protect.
+
+Prior state: ~`$4.50`/day on a `$50`/day budget, 0 ATC, 0 purchases, CPC
+`$0.52`, CTR 2.54%.
+
+**Read it at 48h (Nov 23):**
+- Spend climbs above ~`$15`/day -> it was priced out, let it run
+- Still under ~`$15`/day -> the cap is not the problem, the **creative** is.
+  Swap the ad to the +SHOP post `518476831357470_122181500744746577` to inherit
+  90 purchases of social proof instead of a fresh post with none.
+
+Supporting the second path: the old `$28 target` runs the *established* catalog
+creative and gets ATCs at `$1.62` converting at 29% - same cap, proven creative,
+works fine. The new ad set's problem is most likely zero social proof.
+
+## Open watch list (as of Nov 21 evening)
+
+1. **+SHOP checkout test** - George to buy from his own ad. 17 ATC / 6 checkouts
+   / 0 purchases. Highest priority.
+2. **S3 at `$80`** - raised from `$40` today after 3 days at 3.9+. Did it hold?
+3. **Grid 2 at `$12.50`** - held deliberately; a second producing day is the
+   trigger to raise.
+4. **Bid cap `$28`** - read Nov 23 per above.
+5. **Just Released** - cut Monday unless ATCs start (1 ATC in 3 days).
+6. **Grid 3** - weakest funded ad set: `$29.81`/ATC, 1.07 ROAS, on `$25`/day.
+7. **~`$20`/day headroom** still unallocated after the cuts.
+8. **S3 - Copy CTR sliding** - 1.70% -> 1.86% -> 1.53%. Revenue fine. Watch only.
+9. **~Dec 2** - walk elevated budgets back once BF demand stops masking dips.
