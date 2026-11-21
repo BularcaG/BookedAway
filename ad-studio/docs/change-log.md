@@ -599,3 +599,89 @@ plans assume.
 - `Bid Cap 11/19` `$26`: `$3.97`, **CPC `$0.33`**, CTR 3.21%, 374 impressions,
   0 purchases. Spending but far under budget. Day 2 - check again ~Nov 22; if
   still under ~`$15`/day, raise the cap to `$28`-`$30`, do not kill it.
+
+## Account review (Nov 21): multi-window
+
+| Window | Meta spend | Meta ROAS | Shopify orders | Shopify rev | **Real ROAS** |
+| --- | --- | --- | --- | --- | --- |
+| 7d (14-20) | `$2,595` | 1.68 | 125 | `$5,425` | **2.09** |
+| 3d (18-20) | `$1,257` | 1.86 | 65 | `$2,970` | **2.36** |
+| Today (partial) | `$114` | 3.73 | 9 | `$535` | **4.71** |
+
+**Trending up.** Daily revenue ~`$614`/day (Nov 14-17) -> ~`$990`/day
+(Nov 18-20), **+61%**. Orders 12-18/day -> 20-24/day.
+
+Tracking gap steady at **-18% orders, -20% revenue**. Break-even in Meta's
+numbers ~1.45.
+
+### Cut list - `$78`/day producing nothing
+
+| Ad set | 7d spend | 7d purch | 7d ROAS | Last 3d |
+| --- | --- | --- | --- | --- |
+| Just Released (Discovery) | `$118.11` | **0** | - | `$50.93`, 0, CPC `$1.24` |
+| Reader life | `$113.43` | 2 | 0.61 | `$44.27`, 1, 0.79 |
+| Retargeting | `$103.46` | 2 | 1.00 | `$43.36`, 1, 0.80 |
+| Design Only | `$101.03` | 3 | 0.92 | `$38.42`, 1, 0.91 |
+| Sleeper 2 | `$58.29` | **0** | - | `$52.23`, **0** |
+| Sleeper 1 | `$50.89` | **0** | - | `$44.98`, **0** |
+
+`$545`/7d -> 7 purchases. ~1.0 even grossed up for tracking. Three have produced
+**zero purchases in a week**. Sleepers: `$109` spent, zero purchases, still not
+testing the shortlisted designs.
+
+### Scale
+
+**Grid 2 still `$12.50`** - flagged every session since Nov 18:
+
+| | 7d | 3d |
+| --- | --- | --- |
+| ROAS | 2.60 | **3.42** |
+| CPA | `$14.81` | **`$13.30`** |
+| CTR | 3.39% | 3.66% |
+
+**S3 at `$40` proves scaling works here:** 7d 3.09 / `$12.78`; 3d **3.36 /
+`$12.40`**; today 5.64. Doubled on the 20th and got *better* - no dip at all.
+Earned the next rung: **`$40` -> `$50`**.
+
+### Correction: the S3 - Copy decay call was wrong
+
+Called decay Nov 19 off a single 1.69 day. It recovered:
+
+| | 7d | 3d |
+| --- | --- | --- |
+| ROAS | 2.03 | **2.41** |
+| CPA | `$19.91` | **`$17.30`** |
+
+Should have applied the own-rule (one day is noise) instead of reacting on the
+account's biggest ad set. CTR *is* still drifting - 2.05% (7d) -> 1.90% (3d) ->
+1.46% (today) - so keep watching that specifically, but leave the budget alone.
+
+### New problem: +SHOP catalog has stopped converting
+
+| | 7d | 3d |
+| --- | --- | --- |
+| Spend | `$134.44` | `$61.65` |
+| Purchases | 4 | **0** |
+| ROAS | 0.99 | - |
+
+Was the best unit in the account two days ago (2.56, `$14.55` CPA). Now three
+days at zero on `$62`. Same shape as the October catalog collapse. **One more
+zero day = five days = done.**
+
+### Bid cap is priced out - raise to `$28`
+
+`Bid Cap 11/19` `$26`: **`$10.39` over 7 days** on `$50`/day (~`$1.50`/day).
+CPC `$0.47`, CTR 2.53% both healthy - it just is not winning auctions. Textbook
+priced-out: raise, do not kill.
+
+Corroborating: the old **`$28 target`** did `$17.96` -> **2 purchases at `$8.98`
+CPA** this week, `$9.21` -> 2 purchases in the last 3 days. `$28` is finding
+what `$26` cannot.
+
+### Also
+
+- **AOV climbing:** `$34` (Nov 14-15) -> `$43`-`$46` (Nov 18-19) -> **`$55.63`
+  today**. Nov 20 dipped to `$35.74`, so noisy, but the direction widens CPA
+  tolerance.
+- **Ad Set 17 / `Almost Idyllic`**: both purchases were Nov 19, nothing in the
+  three days since. The 12.11 was a one-off. Leave running, do not act.
