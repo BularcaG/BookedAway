@@ -685,3 +685,82 @@ what `$26` cannot.
   tolerance.
 - **Ad Set 17 / `Almost Idyllic`**: both purchases were Nov 19, nothing in the
   three days since. The 12.11 was a one-off. Leave running, do not act.
+
+## Cadence change (Nov 21): daily / intraday for Black Friday week
+
+George is moving to day-to-day and sometimes 2-3 changes per day through BF.
+Demand started ramping ~Nov 18. Standing format from here:
+
+**Each check pulls:** yesterday full day by ad set, today's partial, Shopify
+daily for the real number, 7d for context. Meta under-reports ~20%, so always
+reconcile against Shopify.
+
+**Scale triggers (BF week):**
+- 3+ purchases yesterday at 3.0+ real ROAS -> +50-100% that morning
+- Spending at or near cap -> raise regardless, volume is being left behind
+- Afternoon re-check: pacing at or above yesterday's ROAS -> another +25-30%
+
+**Kill trigger (tighter than normal):** zero purchases on `$25`+ over 48h ->
+pause. Opportunity cost during BF outweighs the usual patience.
+
+**Post-BF warning:** fast scaling works now because rising demand masks the
+usual post-raise dip. When demand drops the elevated budgets remain. **Diarise
+~Dec 2 to walk everything back to what its ROAS then justifies.**
+
+## Nov 19-21 daily
+
+| | Spend | Meta purch | Shopify orders | Shopify rev | **Real ROAS** |
+| --- | --- | --- | --- | --- | --- |
+| Nov 19 | `$450.29` | 15 | 20 | `$1,000.63` | **2.22** |
+| Nov 20 | `$378.71` | 17 | 24 | `$969.75` | **2.56** |
+| Nov 21 (to ~10am) | `$117.02` | 8 | 9 | `$534.73` | **4.57** |
+| 7d context | `$2,595` | 103 | 125 | `$5,425` | 2.09 |
+
+Spent `$72` *less* on the 20th than the 19th and held revenue - efficiency
+improving, not just volume.
+
+### S3 is the scale candidate
+
+| | Spend | Purch | ROAS | CPA |
+| --- | --- | --- | --- | --- |
+| Nov 19 | `$50.73` | 4 | 3.91 | `$12.68` |
+| Nov 20 | `$38.71` | 5 | **4.55** | `$7.74` |
+| Nov 21 | `$13.19` | 2 | 5.44 | `$6.60` |
+
+On a `$40` budget, spending `$38`-`$50` - not even hitting its cap.
+**Advised `$40` -> `$80`.**
+
+### Grid 2 Nov 20: `$11.47` -> 3 purchases, **11.91 ROAS**, CTR 4.13%
+
+Still `$12.50`. **Advised `$12.50` -> `$30`.**
+
+### S3 - Copy recovered: 1.69 -> 2.12 -> **7.59**
+
+Confirms the Nov 19 decay call was wrong. But **CTR keeps sliding: 1.70% ->
+1.86% -> 1.53%**. Revenue fine, attention is not. Watch, do not cut.
+
+### Retargeting woke up - reversing yesterday's cut advice
+
+`$5.72` -> **2 purchases, 17.43 ROAS, CTR 3.46%** today after two days at zero.
+Almost certainly the email George sent landing. **Keep it on.**
+
+### Cut list: `$210` over three days for zero purchases
+
+| Ad set | 3d spend | Purchases |
+| --- | --- | --- |
+| +SHOP catalog | `$45.95` | **0** |
+| Just Released | `$38.10` | **0** |
+| Sleeper 2 | `$37.67` | **0** |
+| Sleeper 1 | `$32.05` | **0** |
+| Cabot Cove | `$28.81` | **0** |
+| Design Only | `$27.40` | **0** |
+
+~`$70`/day during the best demand window of the year. **+SHOP is confirmed dead**
+- fifth zero day after being the account's best unit on Nov 19.
+
+### Data quirk worth remembering
+
+`filtering` on `amount_spent` combined with `time_increment` corrupts the daily
+rows - big ad sets came back as `$0` on days they spent hundreds. **Use
+`object_ids` instead of `filtering` whenever pulling a daily breakdown.** Same
+class of bug as `sort` being silently ignored (logged Nov 18).
