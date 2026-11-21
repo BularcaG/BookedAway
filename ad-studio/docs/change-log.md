@@ -764,3 +764,65 @@ Almost certainly the email George sent landing. **Keep it on.**
 rows - big ad sets came back as `$0` on days they spent hundreds. **Use
 `object_ids` instead of `filtering` whenever pulling a daily breakdown.** Same
 class of bug as `sort` being silently ignored (logged Nov 18).
+
+## Nov 21 (afternoon): George's changes + funnel analysis
+
+### Changes George made
+
+- **Cut:** Sleeper 1, Sleeper 2, Design Only, Ad Set 19 Cabot Cove (~`$60`/day)
+- **S3 `$40` -> `$80`**
+- **Kept +SHOP** - his main catalog, discovery function, 17 add-to-carts
+- **Kept Just Released** - watching whether new designs get attention, small budget
+- **Kept Retargeting** - low-hanging fruit, may build a second one
+- **Grid 2 held at `$12.50`** - correctly noting the 11.91 came from a single day
+  with 3 purchases. Applying the one-day rule; right call.
+
+Net budget: -`$60` cut, +`$40` to S3 = **~`$20`/day headroom unused.**
+
+### Funnel by ad set, Nov 19-21 - the key table
+
+| Ad set | Spend | ATC | Checkout | Purch | ATC->Purch | Cost/ATC |
+| --- | --- | --- | --- | --- | --- | --- |
+| S3 | `$103.74` | 25 | 17 | 11 | **44%** | `$4.15` |
+| S3 - Copy | `$340.54` | 43 | 24 | 17 | **40%** | `$7.92` |
+| Retargeting | `$36.89` | 4 | 3 | 2 | 50% | `$9.22` |
+| Ad Set 17 | `$31.50` | 7 | 4 | 2 | 29% | `$4.50` |
+| `$28 target` | `$11.31` | 7 | 3 | 2 | 29% | **`$1.62`** |
+| S5 | `$39.73` | 7 | 2 | 1 | 14% | `$5.68` |
+| **+SHOP** | `$46.14` | **17** | **6** | **0** | **0%** | **`$2.71`** |
+| Grid 3 | `$59.61` | 2 | 1 | 2 | - | **`$29.81`** |
+| Just Released | `$38.84` | **1** | 0 | 0 | - | **`$38.84`** |
+
+### CORRECTION: +SHOP is not dead - its checkout is broken
+
+Second-cheapest add-to-carts in the account (`$2.71`) and **zero** conversions.
+**17 ATC -> 6 initiated checkouts -> 0 purchases.** Every other ad set converts
+50-71% of initiated checkouts; this one converts **0 of 6**.
+
+Not a creative or audience problem. Something breaks at checkout. Leading
+suspect: it is the only ad set using the **Facebook Shop destination**.
+
+**Action: George to tap his own +SHOP ad, add to cart, attempt purchase.** If it
+breaks he has been paying `$15`-`$20`/day for traffic that cannot convert, right
+before BF.
+
+I was wrong to group this with the dead ad sets on Nov 20-21. George's instinct
+to keep it was correct.
+
+### But Just Released is a different case
+
+`$38.84` -> **1 ATC**, 0 checkouts, 0 purchases. `$38.84` per add-to-cart.
++SHOP finds interest; Just Released finds nothing. Three days as a discovery
+catalog produced one cart click. **Give it until Monday, then cut.**
+
+### Grid 3 is now the weakest funded ad set
+
+CTR 3.30% (healthy) but **`$29.81` per ATC** and **1.07 ROAS** on `$25`/day -
+double Grid 2's budget. People click and do not want the product. This is the
+budget Grid 2 could use.
+
+### `$28` bid cap keeps showing up
+
+`$1.62` per ATC - cheapest in the account - converting at 29% on `$11.31`.
+Second independent signal for `$28`. Strengthens the case for taking
+`Bid Cap 11/19` from `$26` -> `$28`.
