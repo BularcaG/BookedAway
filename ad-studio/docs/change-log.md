@@ -858,3 +858,81 @@ works fine. The new ad set's problem is most likely zero social proof.
 7. **~`$20`/day headroom** still unallocated after the cuts.
 8. **S3 - Copy CTR sliding** - 1.70% -> 1.86% -> 1.53%. Revenue fine. Watch only.
 9. **~Dec 2** - walk elevated budgets back once BF demand stops masking dips.
+
+## Nov 23-24: best day of the run, and three cut calls retracted
+
+| Date | Meta spend | Shopify orders | Shopify rev | **Real ROAS** | AOV |
+| --- | --- | --- | --- | --- | --- |
+| Nov 20 | `$379` | 24 | `$969.75` | 2.56 | `$35.74` |
+| Nov 21 | `$367` | 23 | `$1,098.29` | 2.99 | `$43.52` |
+| Nov 22 | `$490` | 23 | `$891.67` | **1.82** | `$34.16` |
+| **Nov 23** | **`$399`** | **27** | **`$1,213.34`** | **3.04** | `$40.79` |
+| Nov 24 (partial) | `$135` | 8 | `$367.15` | 2.72 | `$42.24` |
+
+**George's refusal to judge on Nov 22 was correct.** It bounced to the best day
+of the run on lower spend. Nov 22 also revised up (`$856.81` -> `$891.67`) as
+late attributions landed - a second reason not to judge a day the morning after.
+
+### George's changes
+
+- Created `Ad Set 20 Black Friday` (4 ads to test) and `Bid Cap 11/23`
+  (`$28` cap, best ad, `$50`/day)
+- **S3 - Copy `$150` -> `$180`**, **S3 `$80` -> `$120`** (both ~3 ROAS)
+- Kept the `$28` bid cap rather than cutting it
+- Started a site-wide sale
+
+### Budget bumps justified, but both are delivery-constrained
+
+Nov 23, before the raise: S3 - Copy **3.09** on `$135.69` of a `$150` budget;
+S3 **3.05** on `$86.64` of `$120`. **Neither was hitting its cap**, so the raise
+to `$180`/`$120` will not force more spend by itself. Do not read a flat result
+as the raise failing. **No further raise to S3 until it actually uses `$120`.**
+
+### George was right on the bid cap
+
+| | Spend | Purch | ROAS |
+| --- | --- | --- | --- |
+| Nov 21 | `$64.34` | 3 | 1.57 |
+| Nov 22 | `$43.80` | 1 | **0.66** |
+| Nov 23 | `$38.90` | 3 | **3.64** |
+
+3 days: `$147`, 7 purchases, 1.85 and climbing. I would have cut it on the 0.66.
+
+### Standout: `Ad Set 20 Black Friday`
+
+| | Spend | ATC | Purch | ROAS | CTR |
+| --- | --- | --- | --- | --- | --- |
+| Nov 23 | `$8.59` | 1 | 0 | - | **6.96%** |
+| Nov 24 | `$5.73` | 1 | 1 | **6.61** | **5.21%** |
+
+**5-7% CTR against an account average of 2-3%** - best attention signal seen in
+this account. On `$12.50`/day. **Advised `$12.50` -> `$25`.**
+
+### RETRACTION: the Just Released / Reader life / Grid 3 cut calls were wrong
+
+All three produced on Nov 23:
+
+| | Spend | ATC | Purch | ROAS |
+| --- | --- | --- | --- | --- |
+| Grid 3 | `$7.06` | 3 | 1 | **10.20** |
+| Reader life | `$5.87` | 4 | 1 | **5.94** |
+| Just Released | `$0` (Nov 24) | **7** | 1 (`$72`) | delayed attribution |
+
+**Just Released converts on a lag** - zero spend Nov 24 but 7 ATCs and a `$72`
+purchase attributed from earlier clicks. Same-day numbers were the wrong lens.
+
+**Those cut calls were made on pre-BF economics.** Rising demand lifted ad sets
+that looked dead. **Hold all three.**
+
+Lesson to carry: during a demand ramp, raise the bar for cutting, not lower it.
+A dead-looking ad set in a rising market may just be lagging.
+
+### Current calls
+
+- **Cut:** Ad Set 17 (`$12.65`, 0 ATC, 0 purch) and Ad Set 18 (`$3.53`, 0, 0).
+  The only two with genuinely nothing on Nov 23.
+- **Bump:** `Ad Set 20 Black Friday` `$12.50` -> `$25`.
+- **Hold:** everything else, including the three retracted above.
+- **Watch:** `Bid Cap 11/23` has spent **`$2.03` over two days** on a `$50`
+  budget - the same priced-out pattern the last one started with. If still at
+  `$1`-`$2`/day tomorrow, raise the cap or it idles all week.
