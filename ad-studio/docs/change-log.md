@@ -936,3 +936,101 @@ A dead-looking ad set in a rising market may just be lagging.
 - **Watch:** `Bid Cap 11/23` has spent **`$2.03` over two days** on a `$50`
   budget - the same priced-out pattern the last one started with. If still at
   `$1`-`$2`/day tomorrow, raise the cap or it idles all week.
+
+## Nov 22-26: the ceiling, and two failed raises
+
+### The headline finding: revenue is flat at ~`$1,100`/day regardless of spend
+
+| Date | Spend | Orders | Revenue | **Real ROAS** | **Blended CPA** |
+| --- | --- | --- | --- | --- | --- |
+| Nov 21 | `$367` | 23 | `$1,098` | 2.99 | `$15.96` |
+| Nov 22 | `$490` | 23 | `$892` | 1.82 | `$21.30` |
+| **Nov 23** | **`$399`** | **27** | **`$1,213`** | **3.04** | **`$14.78`** |
+| Nov 24 | `$454` | 26 | `$1,056` | 2.33 | `$17.46` |
+| **Nov 25** | **`$601`** | 25 | `$1,122` | **1.87** | **`$24.04`** |
+
+Spend rose 64% (`$367` -> `$601`). Revenue did not move. Versus Nov 23, Nov 25
+spent **`$202` more and made `$91` less**, and blended CPA went above the 90-day
+average of `$21.27` for the first time this week.
+
+**Current ceiling is around `$400`/day.** Past that the extra money reaches the
+same buyers more expensively.
+
+### Both Nov 24 raises failed
+
+**S3 `$120` -> `$200`:**
+
+| | Budget | Spend | Purch | ROAS | CPA |
+| --- | --- | --- | --- | --- | --- |
+| Nov 24 | `$120` | `$120.52` | **9** | **3.30** | **`$13.39`** |
+| Nov 25 | `$200` | `$219.18` | 7 | **1.59** | **`$31.31`** |
+
+An extra `$99` bought **two fewer purchases**.
+
+**Ad Set 20 `$35` -> `$100`:** `$63.64` spent, 1 ATC, **zero purchases**. At
+`$35` it was doing 3 purchases at an `$8.22` CPA. The raise reset learning to 0
+conversions and it never recovered - two days, `$85`, nothing.
+
+### THE RULE (learned the expensive way)
+
+> **Raise a budget only when the ad set is hitting its cap.**
+> Not hitting the cap means budget is not the constraint - delivery is - so a
+> raise buys nothing and costs the learning reset.
+
+Nov 24 evidence: S3 spent `$120.52` of `$120` (capped -> raise justified).
+Ad Set 20 spent `$24.67` of `$35` (not capped -> raise was wrong).
+
+**Corollary:** keep raises **under ~20-25%** to stay below the significant-edit
+threshold that resets learning. This is why the agreed tier rule is "+25% every
+3 days" - it was always a reset-avoidance rule, not just a pacing one.
+
+### Cheapest acquisition is in the smallest ad sets
+
+Nov 25:
+
+| | Budget | Spend | Purch | ROAS | **CPA** |
+| --- | --- | --- | --- | --- | --- |
+| Retargeting | `$15` | `$14.34` | 2 | **8.91** | **`$7.17`** |
+| Grid 2 | `$25` | `$27.43` | 3 | **3.38** | **`$9.14`** |
+| S3 - Copy | `$180` | `$197.06` | 10 | 2.18 | `$19.71` |
+| S3 | `$200` | `$219.18` | 7 | 1.59 | `$31.31` |
+
+Both small ones at or over cap at a third of S3's cost per purchase.
+
+### 90-day benchmarks (Aug 27 - Nov 24)
+
+Ad spend `$22,865.69`. Meta: 938 purchases, `$41,169`, 1.80 ROAS, `$24.38` CPA.
+Shopify: **1,075 orders, `$47,053`, 2.06 real ROAS, `$21.27` blended CPA.**
+Meta misses **12.7%** of orders over 90 days (wider, ~18-20%, on recent days).
+
+Supporting: AOV `$39.59` · CPC `$0.43` · CTR 2.43% · cost per ATC `$6.29` ·
+clicks->order **2.03%** · ATC->order **29.6%** · ~50 clicks and ~3.4 ATCs per
+order.
+
+### Other resolved items
+
+- **Just Released passed its ATC test** (threshold was 3+, it got **7** plus a
+  purchase at 7.03 on `$10.24`). It converts on a **lag** - same-day numbers
+  hid it. The earlier cut call was wrong. Keep.
+- **+SHOP paused deliberately** by George, not accidentally. Its lifetime
+  ATC->purchase was a normal **22.2%**, so the recent 17 ATC / 0 purchases is a
+  *recent* break, consistent with his theory that Facebook changed how Shop
+  sends traffic to the site. Revisit in December.
+- **Catalog reignition was the right call.** `VARIANT URL All Products Catalog`
+  beats +SHOP on every lifetime metric: 97 vs 91 purchases, `$4,581` vs `$3,560`
+  revenue, **2.28 vs 1.64 ROAS**, `$20.74` vs `$23.87` CPA, `$0.34` vs `$0.46`
+  CPC, 3.68% vs 2.49% CTR - on `$160` less spend.
+- **Catalog CBO is starving all three** reignited ad sets (~`$13`/day total
+  across them). Either raise that campaign's budget or narrow to VARIANT URL.
+- **`Bid Cap 11/23` is dead at `$28`** - four days, ~`$4.37` on a `$50` budget.
+  Turn off and revisit in December.
+- **Ad Set 17 and 18 cut** (Nov 23).
+
+### Changes made Nov 26
+
+- **S3 `$200` -> `$150`**
+- **Ad Set 20 Black Friday `$100` -> `$50`**
+
+Pending suggestions not yet actioned: Grid 2 `$25` -> `$31`, Retargeting `$15`
+-> `$19` (both capped, both single-digit CPA, both sized to stay under the
+reset threshold).
