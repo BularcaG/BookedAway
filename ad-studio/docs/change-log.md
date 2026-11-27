@@ -1034,3 +1034,96 @@ order.
 Pending suggestions not yet actioned: Grid 2 `$25` -> `$31`, Retargeting `$15`
 -> `$19` (both capped, both single-digit CPA, both sized to stay under the
 reset threshold).
+
+## Nov 27 (Black Friday) - morning check, 9:11am Chicago
+
+Account timezone is **America/Chicago**. All pacing below is at 38% through the day.
+
+### Nov 26 was the week's worst day
+
+`$511.56` spend · 23 orders · `$918.57` · **1.80 real ROAS** · **`$22.24` CPA**.
+Both below the 90-day benchmarks (2.06 / `$21.27`). The budget cuts made that
+evening came too late to change the day.
+
+### Nov 27 opened strong
+
+`$83.37` spend · 11 orders · `$424.09` · **5.17 real ROAS** · **`$7.46` CPA** -
+about a third of normal acquisition cost. Meta showed 8 purchases / `$317.51`,
+missing **27%**.
+
+**Black Friday CPMs landed as expected:** `$19.84` vs ~`$11.70` on Nov 26
+(+70%). CPC `$0.73` vs the `$0.43` 90-day average (+70%). But CTR rose too
+(2.71% vs 2.43%) and conversion carried the day. Paying more per click, getting
+more per click.
+
+### Nothing was capping
+
+| Ad set | Budget | Spent | % used |
+| --- | --- | --- | --- |
+| BF MC2 | `$15` | `$5.44` | 36% |
+| BF Mix | `$25` | `$8.67` | 35% |
+| Ad Set 20 BF | `$50` | `$12.82` | 26% |
+| BF MC1 | `$25` | `$6.03` | 24% |
+| BF Frame | `$25` | `$5.16` | 21% |
+| Retargeting | `$15` | `$2.54` | 17% |
+| BF Grids | `$25` | `$3.43` | 14% |
+| Grid 2 | `$25` | `$3.30` | 13% |
+| **S3** | `$150` | `$14.38` | **10%** |
+| **S3 - Copy** | `$180` | `$13.57` | **8%** |
+
+S3 and S3 - Copy hold `$330` of the `$535` ABO total and spent `$27.95` between
+them. Account-wide: 12.7% of budget at 38% of the clock. **Per THE RULE, no
+raise was justified** - delivery, not budget, was the constraint.
+
+### Today's early winners
+
+| Ad set | Spent | Purch | ROAS | CPC | CTR |
+| --- | --- | --- | --- | --- | --- |
+| **BF MC1** | `$6.03` | **2** | **16.54** | `$0.55` | **5.39%** |
+| Retargeting | `$2.54` | 1 | 14.91 | `$0.64` | 4.26% |
+| Cozy Mystery Catalog | `$2.80` | 1 | 12.45 | `$0.93` | 1.89% |
+| Grid 2 | `$3.30` | 1 | 10.56 | `$0.66` | 4.31% |
+| S3 | `$14.38` | 2 | 5.24 | `$0.44` | 2.82% |
+| BF Mix | `$8.67` | 1 | 4.02 | `$1.45` | 2.97% |
+
+**BF MC1** is the best new ad set in weeks: `$3.02` CPA, 2 of 2 checkouts
+converted. **BF MC2** holds the account's highest CTR (5.66%) at a `$0.60` CPC
+with no purchase yet - a working hook, needs room. The catalog reignition is
+confirmed paying at 12.45 ROAS.
+
+### `Bid Cap 11/19` ($28) is settled - cut it
+
+| | Spend | Purch | Revenue | ROAS |
+| --- | --- | --- | --- | --- |
+| Nov 26 | `$44.11` | 1 | `$28.87` | **0.65** |
+| Nov 27 | `$3.38` | 0 | - | - |
+
+`$47.49` spent for `$28.87` back. The `$26` -> `$28` raise on Nov 25 did unlock
+delivery, which proved the cap was binding - **and the delivery loses money.**
+Final answer on that ad set: the cap was never the problem, the ad was.
+
+### THE RULE, second half
+
+> The ~25% ceiling protects **established** ad sets (S3, S3 - Copy, Grid 2,
+> Retargeting) that hold accumulated learning. On a **brand-new ad set still in
+> early learning** (1-2 lifetime conversions), double the budget freely - there
+> is no learning to destroy.
+
+Derived from George raising BF Grids, BF Mix and BF MC1 from `$12.50` to `$25`
+(+100%). Normally a reset risk; here it cost nothing, because all three were at
+1-2 conversions and already in LEARNING.
+
+### Changes Nov 27
+
+- **BF Grids `$12.50` -> `$25`**
+- **BF Mix `$12.50` -> `$25`**
+- **BF MC1 `$12.50` -> `$25`**
+- BF MC2 at `$15`, BF Frame at `$25` (both new, unchanged today)
+
+### Watch list for the rest of the day
+
+- **BF Frame** - `$15.62` over two days, **zero purchases, `$2.58` CPC** (3.5x
+  the account average). Creative isn't earning the click. Cut if no ATC by noon.
+- **BF Grids** - 3 ATCs, 0 purchases, `$1.72` CPC. Give it the day.
+- **6-8pm Chicago is the decision point.** US Black Friday peaks in the evening;
+  that is when caps hit and when a raise actually buys volume.
