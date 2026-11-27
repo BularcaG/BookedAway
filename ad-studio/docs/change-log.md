@@ -1224,3 +1224,67 @@ higher.** The `$32` bid cap and `$20` cost cap tops were both sized against a
 `$39.59` AOV and are too loose at `$31.46`. **If this AOV holds through the
 weekend: pull the bid cap top rung to `$26-28` and the cost cap top to `$16`.**
 Needs George's real COGS to settle.
+
+### Nov 27, 3:45pm - two bumps, with the test pre-registered
+
+Both raised going into the evening peak (George's historically strongest buying
+window, and ahead of a 5pm email send).
+
+**Baseline at the moment of the bump** - this is what the later analysis must
+measure against:
+
+| | BF MC2 | BF MC1 |
+| --- | --- | --- |
+| Budget | **`$15` -> `$30`** | **`$25` -> `$40`** |
+| Spent | `$13.23` | `$17.74` |
+| **Left in tank** | **`$1.77` (88% used)** | **`$7.26` (71% used)** |
+| Purchases | 1 | 2 |
+| ROAS | 2.63 | **5.62** |
+| CTR | **6.44%** | **6.26%** |
+| CPC | `$0.53` | `$0.49` |
+| ATC | 5 | 1 |
+| Initiated checkout | 3 | 3 |
+| Learning | early (1 conv) | early (2 conv) |
+
+**Why these two and nothing else:** they were the only ad sets both at 2.5+ ROAS
+AND close to their cap. Grid 2 had a better ROAS (3.03) but sat at 46% of
+budget - per THE RULE a raise buys nothing there.
+
+### The increment test - judge the new money, not the blended day
+
+Pre-registering the bar so the result cannot be rationalised afterwards. Measure
+**only the spend above the baseline** and the purchases above the baseline.
+
+At today's `$31.46` AOV and a ~`$15` print+ship cost, margin per order is
+roughly `$16`. So:
+
+| Incremental CPA | Verdict |
+| --- | --- |
+| **under `$16`** | **good move - repeat this pattern** |
+| `$16-20` | marginal - held the line, no gain |
+| **over `$20`, or zero incremental purchases** | **bad move - the S3 failure again** |
+
+Worked example: if BF MC1 ends the day at `$38` spend and 3 purchases, the
+increment is `$20.26` for 1 purchase = a `$20.26` CPA = marginal.
+
+### Why these raises are not the Nov 24 S3 mistake
+
+S3 **was** capping on Nov 24 (`$120.52` of `$120`) and the raise to `$200` still
+failed. So "it is at its cap" is necessary but not sufficient.
+
+**The missing variable is the absolute size of the increment.** S3 took an extra
+**`$80`** onto a large, saturated ad set, and the audience that `$80` reached was
+far worse than the audience the first `$120` reached. These two bumps add
+**`$15` each** to small ad sets still finding their core audience, both with
+elite CTR and CPC.
+
+> **THE RULE, third part:** a raise needs the ad set at its cap AND a small
+> absolute increment. A `$15` step on a `$25` ad set is not the same risk as an
+> `$80` step on a `$120` one, even at the same percentage.
+
+### Still outstanding as of 3:45pm
+
+The five dead ads were **not** turned off yet. They continue to burn through the
+evening peak: `1` (Ad Set 20), `G2.1` (Grid 2), `02-06-black-friday` (BF Grids),
+`3.3` (S3 - Copy), `Black Friday Frame` (BF Frame) - `$51.95` so far, zero
+purchases, four of the five with zero add-to-carts.
