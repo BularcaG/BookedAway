@@ -1127,3 +1127,100 @@ Derived from George raising BF Grids, BF Mix and BF MC1 from `$12.50` to `$25`
 - **BF Grids** - 3 ATCs, 0 purchases, `$1.72` CPC. Give it the day.
 - **6-8pm Chicago is the decision point.** US Black Friday peaks in the evening;
   that is when caps hit and when a raise actually buys volume.
+
+### Nov 27 intraday - the morning number was inflated
+
+Two snapshots of the same day, 9:11am and 3:34pm Chicago:
+
+| Window | Spend | Orders | Revenue | **Real ROAS** | **CPA** |
+| --- | --- | --- | --- | --- | --- |
+| Morning (to 9:11am) | `$83.37` | 11 | `$424.09` | **5.09** | **`$7.58`** |
+| Afternoon (9:11am-3:34pm) | `$213.77` | 16 | `$560.12` | **2.62** | **`$13.36`** |
+| Cumulative to 3:34pm | `$297.14` | 27 | `$984.21` | 3.31 | `$11.01` |
+
+**Lesson for next year: a morning intraday ROAS reads roughly 2x the day's
+true rate.** Early orders carry attribution from the previous day's clicks, and
+morning auction prices are cheaper. The afternoon window (2.62) is the honest
+number; the cumulative figure stays inflated until late evening.
+
+Meta under-reported **41%** today (16 of 27 orders) - far wider than the 12.7%
+90-day average, as expected on a high-volume day.
+
+### The one-ad-carries-the-ad-set pattern
+
+Ad-level pull at 3:34pm found **five ads with `$51.95` spent, zero purchases,
+and in four cases zero add-to-carts** - each with a sibling in the SAME ad set
+converting on less money:
+
+| Ad set | Dead ad | Spend | ATC | CPC | Sibling |
+| --- | --- | --- | --- | --- | --- |
+| Ad Set 20 BF | `1` | `$12.76` | 0 | `$2.13` | `2` -> 1 purch, 2.33, 6 ATC |
+| Grid 2 | `G2.1` | `$10.81` | 0 | `$1.08` | `G2.2` -> 1 purch on `$0.54` |
+| BF Grids | `02-06-black-friday` | `$10.72` | 3 | `$1.53` | `02-38_final` -> 1 purch on `$2.56` |
+| S3 - Copy | `3.3` | `$9.11` | 0 | `$0.65` | dedupe loss to S3's `3.3` |
+| BF Frame | `Black Friday Frame` | `$8.55` | 0 | `$1.43` | `...Frame Clean` -> **6.26 ROAS** on `$6.05` |
+
+17% of the day's spend producing nothing. This confirms George's instinct from
+Nov 24 ("there is a ad that is doing better but i think there is another that is
+spending most").
+
+**`S3 - Copy`'s `3.3` is auction dedupe again** - same creative as S3's `3.3`,
+which took `$69.28` and 4 purchases while the copy took `$9.11` and none. Same
+mechanism as the All Stars clones (1,270:1).
+
+**Turning off one ad inside a multi-ad ad set is not a significant edit** and
+does not reset the ad set's learning. Safe at any time.
+
+### Ad set standings at 3:34pm
+
+| Ad set | Budget | Spend | % | Purch | ROAS | CPA |
+| --- | --- | --- | --- | --- | --- | --- |
+| **BF MC1** | `$25` | `$17.33` | 69% | 2 | **5.75** | **`$8.67`** |
+| Catalog +SHOP | - | `$10.38` | - | 1 | 3.36 | `$10.38` |
+| Grid 2 | `$25` | `$11.35` | 45% | 1 | 3.07 | `$11.35` |
+| **BF MC2** | `$15` | `$13.19` | **88%** | 1 | 2.64 | `$13.19` |
+| BF Frame | `$25` | `$14.60` | 58% | 1 | 2.59 | `$14.60` |
+| Retargeting | `$25` | `$14.82` | 59% | 1 | 2.55 | `$14.82` |
+| BF Grids | `$25` | `$14.06` | 56% | 1 | 2.27 | `$14.06` |
+| BF Mix | `$25` | `$17.49` | 70% | 1 | 1.99 | `$17.49` |
+| S3 | `$150` | `$71.69` | 48% | 4 | 1.96 | `$17.92` |
+| Ad Set 20 BF | `$50` | `$30.92` | 62% | 1 | 1.22 | `$30.92` |
+| **S3 - Copy** | `$180` | `$62.94` | **35%** | 2 | **1.16** | **`$31.47`** |
+
+BF MC1's result is one ad: **`BF-01-v2`, `$11.95`, 2 purchases, 8.34 ROAS,
+7.65% CTR, `$0.41` CPC** - the account's best single ad today.
+
+**Only BF MC2 (88%) is capping.** Recommended `$15` -> `$25`: it meets both
+halves of THE RULE (at cap, and new enough that the +67% has no learning to
+destroy).
+
+**S3 - Copy's budget was deliberately left alone.** It is the worst ad set and
+the biggest budget, but it used 35% of it - so the `$180` is academic, and a cut
+would change no real spend while risking a reset on a learning-SUCCESS ad set.
+**When an ad set is not spending its budget, the budget number is irrelevant.**
+
+### New campaigns built Nov 27 (George's structure)
+
+- **`BID CAP Campaign BF 11/27`** - CBO, rungs at `$28`, `$30`, `$31`, `$32`
+- **`COST CAP Campaign BF 11/27`** - CBO, rungs at `$16`, `$18`, `$20`
+
+Day-one delivery: `$31`->`$2.05`, `$30`->`$0.44`, `$28`->`$0.52`,
+**`$32`->`$0`**, and **all three cost caps at `$0`**. Expected during the initial
+ramp, but **if the cost caps are still at `$0` tomorrow morning it is a setup
+problem, not the market.** The `$32` sitting at zero while the `$31` delivers
+also contradicts the CBO-feeds-the-top-rung pattern - worth re-checking.
+
+### AOV is falling fast and it changes the cap math
+
+`$40.65` (Nov 25) -> `$35.41` (Nov 26) -> **`$31.46` (Nov 27)**. Down **23%** in
+two days.
+
+Print cost is **fixed per shirt**, not a percentage of price, so margin per
+order falls harder than AOV does. At a ~`$15` print+ship cost, margin per order
+goes from ~`$25` to ~`$16` - a **36%** cut, not 23%.
+
+**Therefore the acceptable CPA today is LOWER than the 90-day number, not
+higher.** The `$32` bid cap and `$20` cost cap tops were both sized against a
+`$39.59` AOV and are too loose at `$31.46`. **If this AOV holds through the
+weekend: pull the bid cap top rung to `$26-28` and the cost cap top to `$16`.**
+Needs George's real COGS to settle.
