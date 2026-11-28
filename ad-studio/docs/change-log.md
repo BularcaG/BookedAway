@@ -1371,3 +1371,103 @@ of the pattern after the All Stars clones (1,270:1).
 
 **Lesson: the two ad sets look identical on paper and differ 5x in result.** The
 difference is which ad is inside them, not the ad set settings.
+
+## Nov 27 FINAL and the Nov 28 turn
+
+### Nov 27 closed as the best day on record
+
+**`$628.62` spend · 50 orders · `$2,194.17` · real ROAS 3.49 · CPA `$12.57`.**
+Meta: 33 purchases / `$1,427.51` (2.27 ROAS), capturing **66%**.
+
+| | Spend | Orders | Revenue | Real ROAS | CPA |
+| --- | --- | --- | --- | --- | --- |
+| Nov 23 | `$399` | 27 | `$1,213` | 3.04 | `$14.78` |
+| Nov 24 | `$454` | 26 | `$1,056` | 2.33 | `$17.46` |
+| Nov 25 | `$601` | 25 | `$1,122` | 1.87 | `$24.04` |
+| Nov 26 | `$512` | 23 | `$919` | 1.80 | `$22.24` |
+| **Nov 27** | **`$629`** | **50** | **`$2,194`** | **3.49** | **`$12.57`** |
+
+Highest spend ever recorded AND a 3.49 return. **The Nov 26 "ceiling at `$400`/day"
+conclusion is formally retired** - it was a demand ceiling, not a structural one.
+
+The last window was weak, though: 8:30pm-midnight took `$132` for 6 orders and
+`$213` = **1.61 ROAS**, against the day's 3.49. Late night is his worst window.
+
+### Decision audit
+
+| Decision | Result | Verdict |
+| --- | --- | --- |
+| **BF MC1 `$25`->`$40`** | `$17.74`/2 -> `$37.36`/5; increment `$19.62` -> 3 = **`$6.54` CPA** | **WIN** |
+| **BF MC2 `$15`->`$30`** | `$13.23`/1 -> `$26.20`/3; increment `$12.97` -> 2 = **`$6.49` CPA** | **WIN** |
+| S3 held at `$150` | capped at `$155.09`, 10 purch, 2.88; evening `$81.81` -> 6 = `$13.64` | should have raised |
+| S3 - Copy not cut | `$162.60` -> `$142.44` = **0.88 ROAS** | should have cut |
+| Bid Cap 11/19 kept | `$22.97` -> one `$147` order, **6.40 ROAS** | **George right, I was wrong twice** |
+
+### Three analyst errors, all the same root cause
+
+**1. Called the BF MC2 bump a failure at 8:30pm** (`$8.34`, 0 purchases). It
+finished at a **`$6.49` incremental CPA** - statistically identical to MC1's
+`$6.54`. Both bumps worked; MC2's purchases simply landed after 8:30pm.
+
+**2. Two of five "dead ad" kill calls were wrong:**
+
+| Ad | At 3:34pm | Final Nov 27 | |
+| --- | --- | --- | --- |
+| `G2.1` | `$10.81`, 0 purch, 0 ATC | **`$19.85`, 1 purch, `$67.85`, 3.42** | **wrong** |
+| `1` (Ad Set 20) | `$12.76`, 0 purch, 0 ATC | **`$15.45`, 1 purch, 1.55, 5 ATC** | **wrong** |
+| `3.3` (S3 - Copy) | `$9.11`, 0, 0 ATC | `$24.45`, **0 purch, 0 ATC** | holds |
+| `02-06-black-friday` | `$10.72`, 0 | `$16.77`, **0 purch** | holds |
+| `Black Friday Frame` | `$8.55`, 0 | `$14.94`, **0 purch** | holds |
+
+**3. Not raising S3 cost volume** - it capped and its evening money converted at
+`$13.64`.
+
+> **NEW STANDING RULE: never recommend an ad-level kill on intraday data.**
+> Two full closed days minimum. Meta under-reports 34-44% intraday and the big
+> baskets arrive late - `G2.1` pulled a `$67.85` order after 8:30pm from an
+> apparently dead position. Same error as S3 - Copy on Nov 19 and ad `1` here.
+
+### S3 vs S3 - Copy: the dedupe case closed
+
+The **same creative `3.3`** on Nov 27:
+
+| Where | Spend | Purchases | ROAS |
+| --- | --- | --- | --- |
+| **S3 (original)** | **`$149.53`** | **10** | **2.99** |
+| S3 - Copy (duplicate) | `$24.45` | **0** | - |
+
+S3 - Copy's other ad `3.2` managed 1.05 on `$135.85`. The ad set total:
+`$162.60` for `$142.44` - **negative before COGS.**
+
+**So cutting S3 - Copy does not lose the sales; S3 absorbs them.** That is what
+the table proves, and it answers the "never stop what is working" objection:
+this is not working, and its demand has somewhere better to go.
+
+### Nov 28 - the holiday is over
+
+| | Nov 27 @ 9:11am | **Nov 28 @ 9:44am** |
+| --- | --- | --- |
+| Spend | `$83.37` | **`$168.39`** |
+| Orders | 11 | **11** |
+| Revenue | `$424.09` | `$389.65` |
+| **Real ROAS** | **5.09** | **2.31** |
+| AOV | `$39.27` (full day) | **`$30.36`** |
+
+**Double the spend, same orders, less revenue.** And `$74.32` of the `$168.39`
+(44%) went to S3 + S3 - Copy for one purchase.
+
+### Decisions taken Nov 28
+
+1. **S3 - Copy `$180` -> `$60`** and kill its duplicate `3.3` ad. Frees `$120`/day.
+2. **Do not replace that budget** - let the ABO total fall `$585` -> `$465`.
+   Nov 25 already proved `$601`/day without holiday demand returns only 1.87.
+3. **Cozy Mystery Catalog `$20` -> `$25`** - spent `$23.76` on a `$20` budget
+   yesterday (over cap) at 2.93 ROAS, and the week's most consistent performer.
+4. **Hold BF MC1 (`$50`), BF MC2 (`$30`), S3 (`$150`).** MC1 used only `$37.36`
+   of `$50`; S3 is at 25% today vs 49% at the same hour yesterday - do not raise
+   into a softer market.
+5. **`$32` bid cap rung: two full days, `$0` spend, zero impressions.** Not a
+   market problem - a setup problem. Ad likely unattached or in review.
+
+New cap campaigns after two days: cost cap `$20.68` / **0 purchases**; new bid
+caps `$13.63` / **0 purchases**. Hold through Monday before judging.
