@@ -1288,3 +1288,86 @@ The five dead ads were **not** turned off yet. They continue to burn through the
 evening peak: `1` (Ad Set 20), `G2.1` (Grid 2), `02-06-black-friday` (BF Grids),
 `3.3` (S3 - Copy), `Black Friday Frame` (BF Frame) - `$51.95` so far, zero
 purchases, four of the five with zero add-to-carts.
+
+### Nov 27, 8:30pm - the verdict on both bumps
+
+**Day totals at 8:30pm: ~`$496` spend · 44 orders · `$1,981.37` ·
+real ROAS 3.99 · blended CPA `$11.27`.** Meta showed 26 purchases /
+`$1,146.86` (2.31 ROAS), capturing **59%**.
+
+Best day on record by a wide margin:
+
+| | Spend | Orders | Revenue | Real ROAS | CPA |
+| --- | --- | --- | --- | --- | --- |
+| Nov 25 | `$601` | 25 | `$1,122` | 1.87 | `$24.04` |
+| Nov 26 | `$512` | 23 | `$919` | 1.80 | `$22.24` |
+| **Nov 27** | **~`$496`** | **44** | **`$1,981`** | **3.99** | **`$11.27`** |
+
+**Revenue +116% on 3% less spend than Nov 26.** The ~`$1,100`/day revenue
+ceiling logged on Nov 26 was a demand ceiling, not a structural one - Black
+Friday lifted it to `$1,981`. **AOV also recovered to `$39.38`**, so the midday
+`$31.46` reading was a trough, not a trend, and the margin warning built on it
+was premature.
+
+#### The increment test - result
+
+| | Baseline 3:45pm | At 8:30pm | **Increment** | Verdict |
+| --- | --- | --- | --- | --- |
+| **BF MC1** `$25`->`$40` | `$17.74`, 2 purch | `$29.05`, **4 purch** | **`$11.31` -> 2 = `$5.66` CPA** | **PASS** (bar was `$16`) |
+| **BF MC2** `$15`->`$30` | `$13.23`, 1 purch | `$21.57`, 1 purch | **`$8.34` -> 0** | **FAIL** |
+
+**BF MC1 cleared the bar by 3x.** One ad does all of it: `BF-01-v2` at
+`$25.04`, 4 purchases, `$171.43`, **6.85 ROAS, `$0.52` CPC, 5.99% CTR**. Its
+sibling `BF-08-v2` has `$4.76` and nothing.
+
+**BF MC2 returned nothing on the new money** - and no new ATCs or checkouts
+either (still 5 and 3, unchanged from baseline). Confirms that the raise, not
+the market, was the wrong call there. **Note the asymmetry: both ad sets were
+capping and both had elite CTR/CPC, yet one paid back 3x and the other zero.**
+Capping plus a cheap click does not guarantee the next dollar converts.
+
+#### I was wrong about ad `1` in Ad Set 20
+
+Called it "the worst ad on the account" at 3:34pm on `$12.76`, zero purchases,
+zero ATCs, `$2.13` CPC, and put it top of the kill list. **By 8:30pm it had
+converted:** `$14.96`, 1 purchase, `$23.91`, **1.60 ROAS**, and CPC fell to
+`$1.50`. It produced on `$2.20` of incremental spend.
+
+The error: judging an ad on a midday window in an account that under-reports
+41-44% intraday and whose buyers cluster in the evening. **Same mistake as S3 -
+Copy on Nov 19.** A zero-purchase ad at midday is not a dead ad.
+
+#### Four of the five kills do hold
+
+| Ad | Ad set | Spend | Purch | ATC | Added since 3:34pm |
+| --- | --- | --- | --- | --- | --- |
+| `3.3` | S3 - Copy | `$18.84` | **0** | **0** | `$9.73`, nothing |
+| `G2.1` | Grid 2 | `$17.22` | **0** | **0** | `$6.41`, nothing |
+| `02-06-black-friday` | BF Grids | `$14.83` | **0** | 3 | `$4.11`, nothing |
+| `Black Friday Frame` | BF Frame | `$12.61` | **0** | 2 | `$4.06`, 2 ATC |
+
+**`$63.50` with zero purchases.** `Black Friday Frame Clean`, in the same ad
+set, has 1 purchase and **4.17 ROAS on `$9.07`**.
+
+#### The dedupe finding is now airtight
+
+The **same creative `3.3`** ran in two ad sets all day:
+
+| Where | Spend | Purchases | ROAS |
+| --- | --- | --- | --- |
+| **S3 (original)** | **`$123.94`** | **9** | **3.32** |
+| S3 - Copy (duplicate) | `$18.84` | **0** | - |
+
+The original took 6.6x the spend and every single purchase. Third confirmation
+of the pattern after the All Stars clones (1,270:1).
+
+#### S3 vs S3 - Copy settled
+
+- **S3 / `3.3`: `$123.94`, 9 purchases, `$412.02`, 3.32 ROAS, 15 ATC, 11 IC.**
+  It was 1.92 ROAS at 3:45pm and 2.34 at 7:58pm - **it accelerated all evening.**
+  Leaving its budget alone was right.
+- **S3 - Copy / `3.2`: `$102.83`, 2 purchases, 0.71 ROAS.** The account's single
+  biggest waste today. The ad set as a whole: `$115.39` at 0.63.
+
+**Lesson: the two ad sets look identical on paper and differ 5x in result.** The
+difference is which ad is inside them, not the ad set settings.
